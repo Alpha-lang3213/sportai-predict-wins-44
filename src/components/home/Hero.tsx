@@ -1,14 +1,11 @@
-
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-
 const Hero = () => {
   const [timeLeft, setTimeLeft] = useState({
     hours: 0,
     minutes: 0,
     seconds: 0
   });
-
   useEffect(() => {
     // Set a future date for an important match
     const matchTime = new Date();
@@ -17,28 +14,25 @@ const Hero = () => {
     const timer = setInterval(() => {
       const now = new Date();
       const difference = matchTime.getTime() - now.getTime();
-      
       if (difference <= 0) {
         clearInterval(timer);
         return;
       }
-      
-      const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((difference % (1000 * 60)) / 1000);
-      
-      setTimeLeft({ hours, minutes, seconds });
+      const hours = Math.floor(difference % (1000 * 60 * 60 * 24) / (1000 * 60 * 60));
+      const minutes = Math.floor(difference % (1000 * 60 * 60) / (1000 * 60));
+      const seconds = Math.floor(difference % (1000 * 60) / 1000);
+      setTimeLeft({
+        hours,
+        minutes,
+        seconds
+      });
     }, 1000);
-
     return () => clearInterval(timer);
   }, []);
-
   const formatTime = (value: number) => {
     return value < 10 ? `0${value}` : value;
   };
-
-  return (
-    <div className="gradient-bg min-h-[90vh] pt-24 pb-16 px-4 flex items-center relative overflow-hidden">
+  return <div className="gradient-bg min-h-[90vh] pt-24 pb-16 px-4 flex items-center relative overflow-hidden">
       {/* Decorative background elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute left-[10%] top-[20%] w-64 h-64 bg-sport-blue-medium/20 rounded-full blur-3xl"></div>
@@ -80,11 +74,15 @@ const Hero = () => {
                   <div className="text-2xl font-bold text-gray-300">{formatTime(timeLeft.hours)}</div>
                   <div className="text-xs text-gray-300">часов</div>
                 </div>
-                <div className="w-20 h-20 neo-blur rounded-lg flex flex-col items-center justify-center animate-float" style={{ animationDelay: "0.2s" }}>
+                <div className="w-20 h-20 neo-blur rounded-lg flex flex-col items-center justify-center animate-float" style={{
+                animationDelay: "0.2s"
+              }}>
                   <div className="text-2xl font-bold text-gray-300">{formatTime(timeLeft.minutes)}</div>
                   <div className="text-xs text-gray-300">минут</div>
                 </div>
-                <div className="w-20 h-20 neo-blur rounded-lg flex flex-col items-center justify-center animate-float" style={{ animationDelay: "0.4s" }}>
+                <div className="w-20 h-20 neo-blur rounded-lg flex flex-col items-center justify-center animate-float" style={{
+                animationDelay: "0.4s"
+              }}>
                   <div className="text-2xl font-bold text-gray-300">{formatTime(timeLeft.seconds)}</div>
                   <div className="text-xs text-gray-300">секунд</div>
                 </div>
@@ -95,84 +93,46 @@ const Hero = () => {
           <div className="hidden lg:flex justify-center">
             <div className="relative w-full h-96">
               {/* Neural Network Visualization */}
-              <div className="absolute inset-0 flex items-center justify-center">
+              <div className="absolute inset-0 flex items-center justify-center bg-[#2b2b2b]/0 mx-0 rounded-none py-0 my-0">
                 {/* First row of network nodes */}
                 <div className="absolute left-0 top-0 flex flex-col gap-6">
-                  {[...Array(5)].map((_, i) => (
-                    <div key={`input-${i}`} className={`w-8 h-8 rounded-full bg-sport-blue-medium/80 animate-pulse-light`} 
-                         style={{ animationDelay: `${i * 0.2}s` }}></div>
-                  ))}
+                  {[...Array(5)].map((_, i) => <div key={`input-${i}`} className={`w-8 h-8 rounded-full bg-sport-blue-medium/80 animate-pulse-light`} style={{
+                  animationDelay: `${i * 0.2}s`
+                }}></div>)}
                 </div>
                 
                 {/* Second row of network nodes */}
                 <div className="absolute left-[25%] top-4 flex flex-col gap-8">
-                  {[...Array(4)].map((_, i) => (
-                    <div key={`hidden1-${i}`} className={`w-10 h-10 rounded-full bg-sport-accent/80 animate-pulse-light`}
-                         style={{ animationDelay: `${i * 0.3}s` }}></div>
-                  ))}
+                  {[...Array(4)].map((_, i) => <div key={`hidden1-${i}`} className={`w-10 h-10 rounded-full bg-sport-accent/80 animate-pulse-light`} style={{
+                  animationDelay: `${i * 0.3}s`
+                }}></div>)}
                 </div>
                 
                 {/* Third row of network nodes */}
                 <div className="absolute left-[50%] top-8 flex flex-col gap-10">
-                  {[...Array(3)].map((_, i) => (
-                    <div key={`hidden2-${i}`} className={`w-12 h-12 rounded-full bg-sport-blue-light/80 animate-pulse-light`}
-                         style={{ animationDelay: `${i * 0.4}s` }}></div>
-                  ))}
+                  {[...Array(3)].map((_, i) => <div key={`hidden2-${i}`} className={`w-12 h-12 rounded-full bg-sport-blue-light/80 animate-pulse-light`} style={{
+                  animationDelay: `${i * 0.4}s`
+                }}></div>)}
                 </div>
                 
                 {/* Connection lines - SVG overlay */}
-                <svg className="absolute inset-0 w-full h-full" style={{ zIndex: -1 }}>
+                <svg className="absolute inset-0 w-full h-full" style={{
+                zIndex: -1
+              }}>
                   {/* Connections from first to second row */}
-                  {[...Array(5)].map((_, i) => (
-                    [...Array(4)].map((_, j) => (
-                      <line 
-                        key={`line1-${i}-${j}`} 
-                        x1="32" 
-                        y1={16 + i * 48} 
-                        x2={`${0.25 * 384}`} 
-                        y2={20 + j * 64}
-                        stroke="#8B5CF6"
-                        strokeWidth="2"
-                        strokeOpacity="0.3"
-                        className="animate-pulse-light"
-                        style={{ animationDelay: `${(i+j) * 0.1}s` }}
-                      />
-                    ))
-                  ))}
+                  {[...Array(5)].map((_, i) => [...Array(4)].map((_, j) => <line key={`line1-${i}-${j}`} x1="32" y1={16 + i * 48} x2={`${0.25 * 384}`} y2={20 + j * 64} stroke="#8B5CF6" strokeWidth="2" strokeOpacity="0.3" className="animate-pulse-light" style={{
+                  animationDelay: `${(i + j) * 0.1}s`
+                }} />))}
                   
                   {/* Connections from second to third row */}
-                  {[...Array(4)].map((_, i) => (
-                    [...Array(3)].map((_, j) => (
-                      <line 
-                        key={`line2-${i}-${j}`} 
-                        x1={`${0.25 * 384 + 20}`}
-                        y1={20 + i * 64} 
-                        x2={`${0.5 * 384 + 24}`}
-                        y2={32 + j * 80}
-                        stroke="#F97316"
-                        strokeWidth="2"
-                        strokeOpacity="0.3"
-                        className="animate-pulse-light"
-                        style={{ animationDelay: `${(i+j) * 0.1 + 0.5}s` }}
-                      />
-                    ))
-                  ))}
+                  {[...Array(4)].map((_, i) => [...Array(3)].map((_, j) => <line key={`line2-${i}-${j}`} x1={`${0.25 * 384 + 20}`} y1={20 + i * 64} x2={`${0.5 * 384 + 24}`} y2={32 + j * 80} stroke="#F97316" strokeWidth="2" strokeOpacity="0.3" className="animate-pulse-light" style={{
+                  animationDelay: `${(i + j) * 0.1 + 0.5}s`
+                }} />))}
                   
                   {/* Connections from third row to final point */}
-                  {[...Array(3)].map((_, i) => (
-                    <line 
-                      key={`line3-${i}`} 
-                      x1={`${0.5 * 384 + 24}`}
-                      y1={32 + i * 80} 
-                      x2={`${0.85 * 384}`}
-                      y2="192"
-                      stroke="#D946EF"
-                      strokeWidth="2"
-                      strokeOpacity="0.3"
-                      className="animate-pulse-light"
-                      style={{ animationDelay: `${i * 0.1 + 1}s` }}
-                    />
-                  ))}
+                  {[...Array(3)].map((_, i) => <line key={`line3-${i}`} x1={`${0.5 * 384 + 24}`} y1={32 + i * 80} x2={`${0.85 * 384}`} y2="192" stroke="#D946EF" strokeWidth="2" strokeOpacity="0.3" className="animate-pulse-light" style={{
+                  animationDelay: `${i * 0.1 + 1}s`
+                }} />)}
                 </svg>
                 
                 {/* Final aggregation point */}
@@ -184,15 +144,17 @@ const Hero = () => {
                 
                 {/* Data flow particles */}
                 <div className="absolute left-[7%] top-[10%] w-2 h-2 bg-sport-accent rounded-full animate-data-flow"></div>
-                <div className="absolute left-[12%] top-[30%] w-2 h-2 bg-sport-blue-medium rounded-full animate-data-flow" style={{ animationDelay: "0.5s" }}></div>
-                <div className="absolute left-[18%] top-[50%] w-2 h-2 bg-sport-blue-light rounded-full animate-data-flow" style={{ animationDelay: "1s" }}></div>
+                <div className="absolute left-[12%] top-[30%] w-2 h-2 bg-sport-blue-medium rounded-full animate-data-flow" style={{
+                animationDelay: "0.5s"
+              }}></div>
+                <div className="absolute left-[18%] top-[50%] w-2 h-2 bg-sport-blue-light rounded-full animate-data-flow" style={{
+                animationDelay: "1s"
+              }}></div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default Hero;
