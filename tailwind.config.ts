@@ -63,16 +63,16 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				// SportAI custom colors
+				// SportAI custom colors - updated for dark aggressive theme
 				sport: {
-					'blue-dark': '#0A2647',
-					'blue': '#144272',
-					'blue-medium': '#2C74B3',
-					'blue-light': '#5DA7DB',
-					'accent': '#FF6B6B',
-					'accent-hover': '#FF5252',
-					'green': '#4CAF50',
-					'yellow': '#FFC107',
+					'blue-dark': '#1A1F2C',
+					'blue': '#221F26',
+					'blue-medium': '#8B5CF6',
+					'blue-light': '#D946EF',
+					'accent': '#F97316',
+					'accent-hover': '#F05E16',
+					'green': '#0FA0CE',
+					'yellow': '#F97316',
 				}
 			},
 			borderRadius: {
@@ -108,6 +108,10 @@ export default {
 				'spin-slow': {
 					'0%': { transform: 'rotate(0deg)' },
 					'100%': { transform: 'rotate(360deg)' },
+				},
+				'glow': {
+					'0%, 100%': { boxShadow: '0 0 15px rgba(139, 92, 246, 0.5)' },
+					'50%': { boxShadow: '0 0 25px rgba(139, 92, 246, 0.8)' },
 				}
 			},
 			animation: {
@@ -116,6 +120,7 @@ export default {
 				'pulse-light': 'pulse-light 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
 				'float': 'float 3s ease-in-out infinite',
 				'spin-slow': 'spin-slow 8s linear infinite',
+				'glow': 'glow 2s ease-in-out infinite',
 			}
 		}
 	},

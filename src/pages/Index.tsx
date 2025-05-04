@@ -10,7 +10,7 @@ import Pricing from "@/components/home/Pricing";
 
 const Index = () => {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-sport-blue-dark text-white">
       <Header />
       <main>
         <Hero />
