@@ -112,6 +112,12 @@ export default {
 				'glow': {
 					'0%, 100%': { boxShadow: '0 0 15px rgba(139, 92, 246, 0.5)' },
 					'50%': { boxShadow: '0 0 25px rgba(139, 92, 246, 0.8)' },
+				},
+				'data-flow': {
+					'0%': { opacity: '0', transform: 'translateX(0) translateY(0)' },
+					'20%': { opacity: '1' },
+					'80%': { opacity: '1' },
+					'100%': { opacity: '0', transform: 'translateX(300px) translateY(100px)' },
 				}
 			},
 			animation: {
@@ -121,6 +127,7 @@ export default {
 				'float': 'float 3s ease-in-out infinite',
 				'spin-slow': 'spin-slow 8s linear infinite',
 				'glow': 'glow 2s ease-in-out infinite',
+				'data-flow': 'data-flow 4s ease-in-out infinite',
 			}
 		}
 	},

@@ -107,4 +107,26 @@
   textarea::placeholder {
     color: #4a5568;
   }
+  
+  /* New data flow animation for the neural network */
+  @keyframes data-flow {
+    0% {
+      opacity: 0;
+      transform: translateX(0) translateY(0);
+    }
+    20% {
+      opacity: 1;
+    }
+    80% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+      transform: translateX(300px) translateY(100px);
+    }
+  }
+  
+  .animate-data-flow {
+    animation: data-flow 4s ease-in-out infinite;
+  }
 }
