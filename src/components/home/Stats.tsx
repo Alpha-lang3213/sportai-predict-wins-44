@@ -108,16 +108,16 @@ const StatCard = ({ title, value, description, color }: { title: string, value: 
   return (
     <HoverCard>
       <HoverCardTrigger asChild>
-        <Card className="p-6 cursor-pointer">
-          <div className="text-sm text-gray-500 mb-1">{title}</div>
+        <Card className="p-6 bg-sport-blue-dark/70 border-sport-blue-medium/30 neo-blur cursor-pointer">
+          <div className="text-sm text-gray-400 mb-1">{title}</div>
           <div className={`text-3xl font-bold ${color} mb-1`}>{value}</div>
           <div className="text-xs text-gray-400">Нажмите для подробностей</div>
         </Card>
       </HoverCardTrigger>
-      <HoverCardContent className="w-80">
+      <HoverCardContent className="w-80 bg-sport-blue-dark border-sport-blue-medium/30">
         <div className="space-y-2">
-          <h4 className="font-semibold">{title}</h4>
-          <p className="text-sm text-gray-600">{description}</p>
+          <h4 className="font-semibold text-gray-200">{title}</h4>
+          <p className="text-sm text-gray-400">{description}</p>
         </div>
       </HoverCardContent>
     </HoverCard>
@@ -129,11 +129,11 @@ const Stats = () => {
   const currentStats = statsData[activeSport as keyof typeof statsData];
   
   return (
-    <section id="stats" className="py-16 px-4 bg-gray-50">
+    <section id="stats" className="py-16 px-4 bg-sport-blue-dark">
       <div className="container mx-auto">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold mb-4">Статистика & ROI-график</h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
+          <h2 className="text-3xl font-bold mb-4 text-white">Статистика & ROI-график</h2>
+          <p className="text-gray-300 max-w-2xl mx-auto">
             Полная прозрачность наших результатов. Просматривайте статистику по всем видам спорта или фильтруйте по отдельным дисциплинам.
           </p>
         </div>
@@ -145,12 +145,12 @@ const Stats = () => {
             className="w-full"
           >
             <div className="flex justify-center mb-8">
-              <TabsList className="grid grid-cols-5 w-full max-w-xl">
-                <TabsTrigger value="all">Все</TabsTrigger>
-                <TabsTrigger value="football">Футбол</TabsTrigger>
-                <TabsTrigger value="basketball">Баскетбол</TabsTrigger>
-                <TabsTrigger value="hockey">Хоккей</TabsTrigger>
-                <TabsTrigger value="tennis">Теннис</TabsTrigger>
+              <TabsList className="grid grid-cols-5 w-full max-w-xl bg-sport-blue/50">
+                <TabsTrigger value="all" className="data-[state=active]:bg-sport-blue-medium">Все</TabsTrigger>
+                <TabsTrigger value="football" className="data-[state=active]:bg-sport-blue-medium">Футбол</TabsTrigger>
+                <TabsTrigger value="basketball" className="data-[state=active]:bg-sport-blue-medium">Баскетбол</TabsTrigger>
+                <TabsTrigger value="hockey" className="data-[state=active]:bg-sport-blue-medium">Хоккей</TabsTrigger>
+                <TabsTrigger value="tennis" className="data-[state=active]:bg-sport-blue-medium">Теннис</TabsTrigger>
               </TabsList>
             </div>
             
@@ -174,28 +174,28 @@ const Stats = () => {
                   title="Количество прогнозов"
                   value={currentStats.predictions.toLocaleString()}
                   description="Общее количество прогнозов, сделанных нашим AI за все время. Мы анализируем только те события, по которым доступно достаточно данных для точного прогноза."
-                  color="text-sport-blue-dark"
+                  color="text-sport-accent"
                 />
               </div>
               
-              <Card className="p-6">
-                <h3 className="text-lg font-semibold mb-4">Динамика ROI за последние 12 месяцев</h3>
+              <Card className="p-6 bg-sport-blue-dark/70 border-sport-blue-medium/30 neo-blur">
+                <h3 className="text-lg font-semibold mb-4 text-white">Динамика ROI за последние 12 месяцев</h3>
                 <div className="h-80">
                   <ResponsiveContainer width="100%" height="100%">
                     <LineChart
                       data={currentStats.chartData}
                       margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
                     >
-                      <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+                      <CartesianGrid strokeDasharray="3 3" stroke="#1A1F2C" />
                       <XAxis dataKey="month" stroke="#888888" />
                       <YAxis stroke="#888888" />
-                      <Tooltip />
+                      <Tooltip contentStyle={{ backgroundColor: '#1A1F2C', borderColor: '#8B5CF6', color: '#fff' }} />
                       <Legend />
                       <Line 
                         type="monotone" 
                         dataKey="roi" 
                         name="ROI %" 
-                        stroke="#2C74B3" 
+                        stroke="#8B5CF6" 
                         strokeWidth={3}
                         activeDot={{ r: 8 }} 
                       />
