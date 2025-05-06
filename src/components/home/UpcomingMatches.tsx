@@ -1,10 +1,11 @@
-
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
 import { Input } from "@/components/ui/input";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
+import { useToast } from "@/hooks/use-toast";
 
 // Mocked match data
 const matchesData = [
@@ -103,6 +104,9 @@ interface UpcomingMatchesProps {
 const UpcomingMatches: React.FC<UpcomingMatchesProps> = ({ onShowAllMatches }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [currentTab, setCurrentTab] = useState("today");
+  const { user } = useAuth();
+  const navigate = useNavigate();
+  const { toast } = useToast();
   
   const filteredMatches = matchesData.filter(match => 
     match.homeTeam.toLowerCase().includes(searchQuery.toLowerCase()) || 
@@ -115,6 +119,26 @@ const UpcomingMatches: React.FC<UpcomingMatchesProps> = ({ onShowAllMatches }) =
       case "L": return "bg-sport-accent";
       case "D": return "bg-sport-yellow";
       default: return "bg-gray-300";
+    }
+  };
+
+  const handleDetailedAnalysis = () => {
+    if (!user) {
+      toast({
+        title: "Требуется авторизация",
+        description: "Войдите в аккаунт, чтобы увидеть подробный анализ",
+      });
+      navigate("/login", { state: { from: '/' } });
+      return;
+    }
+    
+    if (user.subscription === 'none' || user.subscription === 'basic') {
+      navigate("/pricing", { state: { selectedPlan: 'standard' } });
+    } else {
+      toast({
+        title: "Подробный анализ",
+        description: "Загружаем детальный анализ матча...",
+      });
     }
   };
 

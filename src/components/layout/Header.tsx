@@ -1,18 +1,25 @@
 
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger, navigationMenuTriggerStyle } from "@/components/ui/navigation-menu";
-import { Menu, X } from "lucide-react";
+import { Menu, X, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Header = () => {
   const isMobile = useIsMobile();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const location = useLocation();
+  const { user, logout } = useAuth();
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
+  };
+  
+  const isActive = (path: string) => {
+    return location.pathname === path;
   };
 
   return (
@@ -28,21 +35,30 @@ const Header = () => {
               <NavigationMenuList className="gap-2">
                 <NavigationMenuItem>
                   <Link to="/">
-                    <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    <NavigationMenuLink className={cn(
+                      navigationMenuTriggerStyle(),
+                      isActive("/") && "bg-sport-blue-medium text-white"
+                    )}>
                       Главная
                     </NavigationMenuLink>
                   </Link>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
                   <Link to="/predictions">
-                    <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    <NavigationMenuLink className={cn(
+                      navigationMenuTriggerStyle(),
+                      isActive("/predictions") && "bg-sport-blue-medium text-white"
+                    )}>
                       Прогнозы
                     </NavigationMenuLink>
                   </Link>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
                   <Link to="/pricing">
-                    <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    <NavigationMenuLink className={cn(
+                      navigationMenuTriggerStyle(),
+                      isActive("/pricing") && "bg-sport-blue-medium text-white"
+                    )}>
                       Тарифы
                     </NavigationMenuLink>
                   </Link>
@@ -79,8 +95,10 @@ const Header = () => {
                   </NavigationMenuContent>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
-                  <NavigationMenuTrigger>Поддержка</NavigationMenuTrigger>
-                  <NavigationMenuContent>
+                  <NavigationMenuTrigger className={isActive("/faq") || isActive("/contact") ? "bg-sport-blue-medium text-white" : ""}>
+                    Поддержка
+                  </NavigationMenuTrigger>
+                  <NavigationMenuContent className="absolute left-0 top-full">
                     <ul className="grid w-[400px] gap-3 p-4">
                       <ListItem href="/faq" title="FAQ">
                         Часто задаваемые вопросы
@@ -97,10 +115,28 @@ const Header = () => {
         </div>
         
         <div className="hidden md:flex items-center gap-4">
-          <Button variant="ghost" className="hover:bg-secondary">
-            Войти
-          </Button>
-          <Button>Регистрация</Button>
+          {user ? (
+            <div className="flex items-center gap-4">
+              <Link to="/profile">
+                <Button variant="ghost" className="hover:bg-secondary flex items-center gap-2">
+                  <User size={18} />
+                  {user.name}
+                </Button>
+              </Link>
+              <Button onClick={logout}>Выйти</Button>
+            </div>
+          ) : (
+            <>
+              <Link to="/login">
+                <Button variant="ghost" className="hover:bg-secondary">
+                  Войти
+                </Button>
+              </Link>
+              <Link to="/register">
+                <Button>Регистрация</Button>
+              </Link>
+            </>
+          )}
         </div>
         
         {/* Mobile menu button */}
@@ -115,13 +151,13 @@ const Header = () => {
       {isMobile && mobileMenuOpen && (
         <div className="fixed inset-0 top-16 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
           <nav className="container p-6 space-y-6">
-            <Link to="/" className="block py-2 text-lg" onClick={toggleMobileMenu}>
+            <Link to="/" className={cn("block py-2 text-lg", isActive("/") && "text-sport-blue-medium font-medium")} onClick={toggleMobileMenu}>
               Главная
             </Link>
-            <Link to="/predictions" className="block py-2 text-lg" onClick={toggleMobileMenu}>
+            <Link to="/predictions" className={cn("block py-2 text-lg", isActive("/predictions") && "text-sport-blue-medium font-medium")} onClick={toggleMobileMenu}>
               Прогнозы
             </Link>
-            <Link to="/pricing" className="block py-2 text-lg" onClick={toggleMobileMenu}>
+            <Link to="/pricing" className={cn("block py-2 text-lg", isActive("/pricing") && "text-sport-blue-medium font-medium")} onClick={toggleMobileMenu}>
               Тарифы
             </Link>
             <div className="block py-2 text-lg">О продукте</div>
@@ -146,12 +182,34 @@ const Header = () => {
               </Link>
             </div>
             <div className="pt-4 flex flex-col gap-4">
-              <Button variant="outline" onClick={toggleMobileMenu}>
-                Войти
-              </Button>
-              <Button onClick={toggleMobileMenu}>
-                Регистрация
-              </Button>
+              {user ? (
+                <>
+                  <Link to="/profile" onClick={toggleMobileMenu}>
+                    <Button variant="outline" className="w-full">
+                      Личный кабинет
+                    </Button>
+                  </Link>
+                  <Button onClick={() => {
+                    logout();
+                    toggleMobileMenu();
+                  }}>
+                    Выйти
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Link to="/login" onClick={toggleMobileMenu}>
+                    <Button variant="outline" className="w-full">
+                      Войти
+                    </Button>
+                  </Link>
+                  <Link to="/register" onClick={toggleMobileMenu}>
+                    <Button className="w-full" onClick={toggleMobileMenu}>
+                      Регистрация
+                    </Button>
+                  </Link>
+                </>
+              )}
             </div>
           </nav>
         </div>

@@ -4,6 +4,9 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "lucide-react";
 import MatchCard from "./MatchCard";
+import { Calendar as CalendarComponent } from "@/components/ui/calendar";
+import { useAuth } from "@/contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 // Sample saved matches
 const savedMatchesData = [
@@ -35,30 +38,55 @@ const savedMatchesData = [
   }
 ];
 
-// Sample months for activity calendar
-const months = ["Май", "Июнь", "Июль", "Август"];
-
 // Sample activity data
 const activityData = [
-  { day: 1, result: null }, // null - no bets
-  { day: 2, result: null },
-  { day: 3, result: "win" },
-  { day: 4, result: null },
-  { day: 5, result: "loss" },
-  { day: 6, result: null },
-  { day: 7, result: null },
-  { day: 8, result: "win" },
-  { day: 9, result: "win" },
-  { day: 10, result: null },
-  // ... more days
+  { date: new Date(2023, 4, 1), result: "win" },
+  { date: new Date(2023, 4, 3), result: "win" },
+  { date: new Date(2023, 4, 5), result: "loss" },
+  { date: new Date(2023, 4, 8), result: "win" },
+  { date: new Date(2023, 4, 9), result: "win" },
+  { date: new Date(2023, 4, 12), result: "loss" },
+  { date: new Date(2023, 4, 15), result: "win" },
+  { date: new Date(2023, 4, 18), result: "loss" },
+  { date: new Date(2023, 4, 20), result: "win" },
 ];
 
 const SavedMatches: React.FC = () => {
-  const [activeMonth, setActiveMonth] = useState("Май");
+  const [date, setDate] = useState<Date | undefined>(new Date());
+  const { user } = useAuth();
+  const navigate = useNavigate();
   
-  const getActivityColor = (result: string | null) => {
-    if (!result) return "bg-sport-blue-dark";
-    return result === "win" ? "bg-sport-green" : "bg-sport-accent";
+  if (!user) {
+    return (
+      <Card className="bg-sport-blue/80 border-sport-blue-medium/30 text-white neo-blur p-8 text-center">
+        <div className="text-gray-400 mb-4">
+          Необходимо войти в аккаунт для просмотра сохраненных матчей
+        </div>
+        <Button 
+          className="bg-sport-blue-medium hover:bg-sport-blue-light"
+          onClick={() => navigate("/login", { state: { from: '/predictions' } })}
+        >
+          Войти
+        </Button>
+      </Card>
+    );
+  }
+  
+  // Function to get modifiers for the calendar
+  const getDayClassNames = (day: Date) => {
+    const matchingActivity = activityData.find(
+      activity => activity.date.getDate() === day.getDate() && 
+                 activity.date.getMonth() === day.getMonth() && 
+                 activity.date.getFullYear() === day.getFullYear()
+    );
+    
+    if (!matchingActivity) return {};
+    
+    return {
+      className: matchingActivity.result === "win" 
+        ? "bg-sport-green/20 text-sport-green font-bold rounded-md" 
+        : "bg-sport-accent/20 text-sport-accent font-bold rounded-md"
+    };
   };
   
   return (
@@ -68,48 +96,28 @@ const SavedMatches: React.FC = () => {
       {/* User activity calendar */}
       <Card className="bg-sport-blue/80 border-sport-blue-medium/30 text-white neo-blur mb-8">
         <CardContent className="p-6">
-          <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center justify-between mb-6">
             <div className="flex items-center">
               <Calendar className="h-5 w-5 mr-2 text-sport-blue-medium" />
-              <h3 className="text-lg font-semibold">Карта активности</h3>
-            </div>
-            <div className="flex space-x-2">
-              {months.map((month) => (
-                <Button 
-                  key={month}
-                  variant="outline" 
-                  size="sm"
-                  className={`${activeMonth === month 
-                    ? 'bg-sport-blue-medium text-white' 
-                    : 'border-sport-blue-medium/30 text-gray-400'}`}
-                  onClick={() => setActiveMonth(month)}
-                >
-                  {month}
-                </Button>
-              ))}
+              <h3 className="text-lg font-semibold">Календарь активности</h3>
             </div>
           </div>
           
-          <div className="grid grid-cols-7 gap-2">
-            {/* Day names */}
-            {["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"].map((day) => (
-              <div key={day} className="text-center text-xs text-gray-500 py-1">
-                {day}
-              </div>
-            ))}
-            
-            {/* Activity squares */}
-            {activityData.map((data, index) => (
-              <div 
-                key={index} 
-                className={`aspect-square rounded-sm ${getActivityColor(data.result)}`}
-                title={data.result ? `День ${data.day}: ${data.result === "win" ? "Выигрыш" : "Проигрыш"}` : `День ${data.day}: Нет ставок`}
-              >
-                <div className="h-full w-full flex items-center justify-center text-xs">
-                  {data.day}
-                </div>
-              </div>
-            ))}
+          <div className="flex justify-center">
+            <CalendarComponent
+              mode="single"
+              selected={date}
+              onSelect={setDate}
+              className="border border-sport-blue-medium/30 rounded-md bg-sport-blue/50"
+              modifiers={{
+                win: activityData.filter(day => day.result === "win").map(day => day.date),
+                loss: activityData.filter(day => day.result === "loss").map(day => day.date),
+              }}
+              modifiersClassNames={{
+                win: "bg-sport-green/20 text-sport-green font-bold",
+                loss: "bg-sport-accent/20 text-sport-accent font-bold",
+              }}
+            />
           </div>
           
           <div className="flex justify-center mt-4 gap-6">
@@ -182,6 +190,7 @@ const SavedMatches: React.FC = () => {
             </div>
             <Button 
               className="bg-sport-blue-medium hover:bg-sport-blue-light"
+              onClick={() => navigate("/predictions")}
             >
               Перейти к прогнозам
             </Button>

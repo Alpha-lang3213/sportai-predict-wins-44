@@ -3,8 +3,9 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Check, X } from "lucide-react";
-import { Link } from "react-router-dom";
-import { pricingFeatures } from "@/constants/pricing";
+import { Link, useNavigate } from "react-router-dom";
+import { pricingFeatures, pricingPlans } from "@/constants/pricing";
+import { useAuth } from "@/contexts/AuthContext";
 
 interface PlanFeature {
   title: string;
@@ -18,14 +19,18 @@ const PricingCard = ({
   price, 
   description, 
   popular = false,
-  buttonText = "Выбрать план" 
+  buttonText = "Выбрать план",
+  onSelect
 }: { 
   title: string; 
   price: string; 
   description: string; 
   popular?: boolean;
   buttonText?: string;
+  onSelect: () => void;
 }) => {
+  const planKey = title.toLowerCase() as keyof typeof pricingFeatures[0];
+  
   return (
     <Card className={`relative p-6 flex flex-col h-full border-2 ${popular ? 'border-sport-blue-medium bg-sport-blue/20' : 'border-gray-800 bg-sport-blue-dark/40'} backdrop-blur-sm`}>
       {popular && (
@@ -47,12 +52,12 @@ const PricingCard = ({
         <ul className="space-y-3 mb-6">
           {pricingFeatures.map((feature, index) => (
             <li key={index} className="flex items-center">
-              {feature[title.toLowerCase() as keyof PlanFeature] ? (
+              {feature[planKey] ? (
                 <Check size={18} className="text-sport-green mr-2 flex-shrink-0" />
               ) : (
                 <X size={18} className="text-gray-500 mr-2 flex-shrink-0" />
               )}
-              <span className={`text-sm ${feature[title.toLowerCase() as keyof PlanFeature] ? 'text-gray-200' : 'text-gray-500'}`}>
+              <span className={`text-sm ${feature[planKey] ? 'text-gray-200' : 'text-gray-500'}`}>
                 {feature.title}
               </span>
             </li>
@@ -60,20 +65,32 @@ const PricingCard = ({
         </ul>
       </div>
       
-      <Link to="/pricing">
-        <Button 
-          className={`w-full ${popular 
-            ? 'bg-sport-blue-medium hover:bg-sport-blue-light text-white' 
-            : 'bg-transparent text-sport-blue-medium border-2 border-sport-blue-medium hover:bg-sport-blue-medium/10'}`}
-        >
-          {buttonText}
-        </Button>
-      </Link>
+      <Button 
+        className={`w-full ${popular 
+          ? 'bg-sport-blue-medium hover:bg-sport-blue-light text-white' 
+          : 'bg-transparent text-sport-blue-medium border-2 border-sport-blue-medium hover:bg-sport-blue-medium/10'}`}
+        onClick={onSelect}
+      >
+        {buttonText}
+      </Button>
     </Card>
   );
 };
 
 const Pricing = () => {
+  const navigate = useNavigate();
+  const { user } = useAuth();
+  
+  const handlePlanSelection = (plan: string) => {
+    if (!user) {
+      // Redirect to login with return path
+      navigate('/login', { state: { from: '/pricing', selectedPlan: plan } });
+    } else {
+      // Redirect to payment page with plan info
+      navigate('/payment', { state: { plan } });
+    }
+  };
+
   return (
     <section id="pricing" className="py-16 px-4 bg-sport-blue-dark">
       <div className="container mx-auto">
@@ -87,24 +104,27 @@ const Pricing = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
           <PricingCard 
             title="Базовый"
-            price="990 ₽"
-            description="Идеальное решение для начинающих игроков"
+            price={pricingPlans.basic.price}
+            description={pricingPlans.basic.description}
             buttonText="Бесплатно 7 дней"
+            onSelect={() => handlePlanSelection('basic')}
           />
           
           <PricingCard 
             title="Стандарт"
-            price="2 490 ₽"
-            description="Полный доступ к AI-прогнозам и инструментам"
+            price={pricingPlans.standard.price}
+            description={pricingPlans.standard.description}
             popular={true}
             buttonText="Бесплатно 7 дней"
+            onSelect={() => handlePlanSelection('standard')}
           />
           
           <PricingCard 
             title="Премиум"
-            price="4 990 ₽"
-            description="Максимальные возможности для профессионалов"
+            price={pricingPlans.premium.price}
+            description={pricingPlans.premium.description}
             buttonText="Бесплатно 7 дней"
+            onSelect={() => handlePlanSelection('premium')}
           />
         </div>
         

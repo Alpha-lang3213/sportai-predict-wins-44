@@ -6,6 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Search, Calendar, Filter } from "lucide-react";
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
 // Sample historical data
 const historyData = [
@@ -63,6 +64,8 @@ const PredictionHistory: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [dateFilter, setDateFilter] = useState("all");
   const [resultFilter, setResultFilter] = useState("all");
+  const [isDatePopoverOpen, setIsDatePopoverOpen] = useState(false);
+  const [isResultPopoverOpen, setIsResultPopoverOpen] = useState(false);
 
   return (
     <div className="w-full">
@@ -88,43 +91,112 @@ const PredictionHistory: React.FC = () => {
             
             <div>
               <label className="text-sm text-gray-400 block mb-2">Период</label>
-              <div className="relative w-full">
-                <Select 
-                  defaultValue={dateFilter} 
-                  onValueChange={setDateFilter}
-                >
-                  <SelectTrigger className="bg-sport-blue border-sport-blue-medium/30 text-gray-300 w-full">
-                    <Calendar className="w-4 h-4 mr-2" />
-                    <SelectValue placeholder="Выберите период" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-sport-blue border-sport-blue-medium/30 text-gray-300 w-full">
-                    <SelectItem value="all">Все время</SelectItem>
-                    <SelectItem value="week">Последняя неделя</SelectItem>
-                    <SelectItem value="month">Последний месяц</SelectItem>
-                    <SelectItem value="3months">Последние 3 месяца</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
+              <Popover open={isDatePopoverOpen} onOpenChange={setIsDatePopoverOpen}>
+                <PopoverTrigger asChild>
+                  <button className="flex items-center justify-between w-full p-2 rounded bg-sport-blue border border-sport-blue-medium/30 text-gray-300">
+                    <div className="flex items-center">
+                      <Calendar className="w-4 h-4 mr-2" />
+                      <span>
+                        {dateFilter === 'all' ? 'Все время' : 
+                         dateFilter === 'week' ? 'Последняя неделя' : 
+                         dateFilter === 'month' ? 'Последний месяц' : 
+                         'Последние 3 месяца'}
+                      </span>
+                    </div>
+                    <span>▼</span>
+                  </button>
+                </PopoverTrigger>
+                <PopoverContent className="bg-sport-blue border-sport-blue-medium/30 text-gray-300 p-0">
+                  <div className="flex flex-col">
+                    <button
+                      className="p-2 hover:bg-sport-blue-medium/20 text-left"
+                      onClick={() => {
+                        setDateFilter('all');
+                        setIsDatePopoverOpen(false);
+                      }}
+                    >
+                      Все время
+                    </button>
+                    <button
+                      className="p-2 hover:bg-sport-blue-medium/20 text-left"
+                      onClick={() => {
+                        setDateFilter('week');
+                        setIsDatePopoverOpen(false);
+                      }}
+                    >
+                      Последняя неделя
+                    </button>
+                    <button
+                      className="p-2 hover:bg-sport-blue-medium/20 text-left"
+                      onClick={() => {
+                        setDateFilter('month');
+                        setIsDatePopoverOpen(false);
+                      }}
+                    >
+                      Последний месяц
+                    </button>
+                    <button
+                      className="p-2 hover:bg-sport-blue-medium/20 text-left"
+                      onClick={() => {
+                        setDateFilter('3months');
+                        setIsDatePopoverOpen(false);
+                      }}
+                    >
+                      Последние 3 месяца
+                    </button>
+                  </div>
+                </PopoverContent>
+              </Popover>
             </div>
             
             <div>
               <label className="text-sm text-gray-400 block mb-2">Результат</label>
-              <div className="relative w-full">
-                <Select 
-                  defaultValue={resultFilter}
-                  onValueChange={setResultFilter}
-                >
-                  <SelectTrigger className="bg-sport-blue border-sport-blue-medium/30 text-gray-300 w-full">
-                    <Filter className="w-4 h-4 mr-2" />
-                    <SelectValue placeholder="Фильтр по результату" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-sport-blue border-sport-blue-medium/30 text-gray-300 w-full z-50">
-                    <SelectItem value="all">Все результаты</SelectItem>
-                    <SelectItem value="success">Успешные</SelectItem>
-                    <SelectItem value="fail">Неудачные</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
+              <Popover open={isResultPopoverOpen} onOpenChange={setIsResultPopoverOpen}>
+                <PopoverTrigger asChild>
+                  <button className="flex items-center justify-between w-full p-2 rounded bg-sport-blue border border-sport-blue-medium/30 text-gray-300">
+                    <div className="flex items-center">
+                      <Filter className="w-4 h-4 mr-2" />
+                      <span>
+                        {resultFilter === 'all' ? 'Все результаты' : 
+                         resultFilter === 'success' ? 'Успешные' : 
+                         'Неудачные'}
+                      </span>
+                    </div>
+                    <span>▼</span>
+                  </button>
+                </PopoverTrigger>
+                <PopoverContent className="bg-sport-blue border-sport-blue-medium/30 text-gray-300 p-0">
+                  <div className="flex flex-col">
+                    <button
+                      className="p-2 hover:bg-sport-blue-medium/20 text-left"
+                      onClick={() => {
+                        setResultFilter('all');
+                        setIsResultPopoverOpen(false);
+                      }}
+                    >
+                      Все результаты
+                    </button>
+                    <button
+                      className="p-2 hover:bg-sport-blue-medium/20 text-left"
+                      onClick={() => {
+                        setResultFilter('success');
+                        setIsResultPopoverOpen(false);
+                      }}
+                    >
+                      Успешные
+                    </button>
+                    <button
+                      className="p-2 hover:bg-sport-blue-medium/20 text-left"
+                      onClick={() => {
+                        setResultFilter('fail');
+                        setIsResultPopoverOpen(false);
+                      }}
+                    >
+                      Неудачные
+                    </button>
+                  </div>
+                </PopoverContent>
+              </Popover>
             </div>
           </div>
         </CardContent>

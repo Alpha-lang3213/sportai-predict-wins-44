@@ -9,6 +9,7 @@ import HotPredictions from "@/components/predictions/HotPredictions";
 import PredictionHistory from "@/components/predictions/PredictionHistory";
 import SavedMatches from "@/components/predictions/SavedMatches";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Predictions: React.FC = () => {
   const [filters, setFilters] = useState({
@@ -18,6 +19,7 @@ const Predictions: React.FC = () => {
     selectedStatus: "upcoming",
     showExpress: false
   });
+  const { user } = useAuth();
 
   const handleFilterChange = (newFilters: any) => {
     setFilters(newFilters);

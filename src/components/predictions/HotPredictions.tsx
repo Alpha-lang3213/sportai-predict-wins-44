@@ -4,6 +4,9 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Flame } from "lucide-react";
 import MatchCard from "./MatchCard";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
+import { useToast } from "@/hooks/use-toast";
 
 // Sample hot matches
 const hotMatches = [
@@ -36,6 +39,24 @@ const hotMatches = [
 ];
 
 const HotPredictions: React.FC = () => {
+  const navigate = useNavigate();
+  const { user } = useAuth();
+  const { toast } = useToast();
+  
+  const handleVIPAccess = () => {
+    if (!user) {
+      toast({
+        title: "Требуется авторизация",
+        description: "Войдите в аккаунт, чтобы получить доступ к VIP-функциям",
+      });
+      navigate("/login", { state: { from: '/predictions' } });
+      return;
+    }
+    
+    // Navigate to pricing with premium plan selected
+    navigate("/pricing", { state: { selectedPlan: "premium" } });
+  };
+  
   return (
     <div>
       <div className="flex items-center justify-center mb-8">
@@ -56,6 +77,7 @@ const HotPredictions: React.FC = () => {
             </div>
             <Button 
               className="bg-sport-accent hover:bg-sport-accent/90 text-white"
+              onClick={handleVIPAccess}
             >
               Оформить VIP подписку
             </Button>
@@ -84,6 +106,7 @@ const HotPredictions: React.FC = () => {
             <div className="absolute inset-0 flex items-center justify-center">
               <Button 
                 className="bg-sport-accent hover:bg-sport-accent/90 text-white"
+                onClick={handleVIPAccess}
               >
                 Разблокировать VIP-доступ
               </Button>

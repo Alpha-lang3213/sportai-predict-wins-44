@@ -8,9 +8,11 @@ import Tools from "@/components/home/Tools";
 import Stats from "@/components/home/Stats";
 import Pricing from "@/components/home/Pricing";
 import { useToast } from "@/components/ui/use-toast";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Index = () => {
   const { toast } = useToast();
+  const { user } = useAuth();
   
   // Function to be called when "Показать все матчи" button is clicked
   const handleShowAllMatches = () => {

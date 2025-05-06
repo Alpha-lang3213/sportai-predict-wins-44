@@ -4,7 +4,9 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { CalendarIcon, Trophy, Star } from "lucide-react";
-import { toast } from "@/hooks/use-toast";
+import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 interface MatchCardProps {
   homeTeam: string;
@@ -33,25 +35,83 @@ const MatchCard: React.FC<MatchCardProps> = ({
 }) => {
   const [isFavorite, setIsFavorite] = useState(false);
   const [notifyBeforeMatch, setNotifyBeforeMatch] = useState(false);
+  const { toast } = useToast();
+  const { user } = useAuth();
+  const navigate = useNavigate();
 
   const toggleFavorite = () => {
+    // Check if user is logged in
+    if (!user) {
+      toast({
+        title: "Требуется авторизация",
+        description: "Войдите в аккаунт, чтобы добавить матч в избранное",
+      });
+      navigate("/login", { state: { from: location.pathname } });
+      return;
+    }
+    
     setIsFavorite(!isFavorite);
     if (!isFavorite) {
       toast({
         title: "Добавлено в избранное",
         description: `${homeTeam} vs ${awayTeam} добавлен в избранное`,
       });
+    } else {
+      toast({
+        title: "Удалено из избранного",
+        description: `${homeTeam} vs ${awayTeam} удален из избранного`,
+      });
     }
   };
 
   const toggleNotification = () => {
+    // Check if user is logged in
+    if (!user) {
+      toast({
+        title: "Требуется авторизация",
+        description: "Войдите в аккаунт, чтобы получать уведомления",
+      });
+      navigate("/login", { state: { from: location.pathname } });
+      return;
+    }
+    
     setNotifyBeforeMatch(!notifyBeforeMatch);
     if (!notifyBeforeMatch) {
       toast({
         title: "Уведомление установлено",
         description: `Вы получите уведомление за 30 минут до начала матча ${homeTeam} vs ${awayTeam}`,
       });
+    } else {
+      toast({
+        title: "Уведомление отменено",
+        description: `Вы не получите напоминание о начале матча`,
+      });
     }
+  };
+
+  const handleDetailedAnalysis = () => {
+    if (!user) {
+      toast({
+        title: "Требуется авторизация",
+        description: "Войдите в аккаунт, чтобы просмотреть подробный анализ",
+      });
+      navigate("/login", { state: { from: location.pathname } });
+      return;
+    }
+    
+    if (user.subscription === 'none' || user.subscription === 'basic') {
+      toast({
+        title: "Недоступно на вашем тарифе",
+        description: "Для доступа к подробному анализу необходим тариф Стандарт или Премиум",
+      });
+      navigate("/pricing");
+      return;
+    }
+    
+    toast({
+      title: "Подробный анализ",
+      description: `Загружаем детальный анализ матча ${homeTeam} vs ${awayTeam}...`,
+    });
   };
 
   return (
@@ -78,6 +138,7 @@ const MatchCard: React.FC<MatchCardProps> = ({
             <button 
               onClick={toggleFavorite} 
               className="ml-2 p-2 rounded-full hover:bg-sport-blue-medium/30"
+              title="Добавить в избранное"
             >
               <Star 
                 className={`h-5 w-5 ${isFavorite ? 'text-sport-yellow fill-sport-yellow' : 'text-gray-400'}`} 
@@ -163,6 +224,7 @@ const MatchCard: React.FC<MatchCardProps> = ({
             variant="outline" 
             size="sm"
             className="border-sport-blue-medium text-sport-blue-medium hover:bg-sport-blue-medium hover:text-gray-200"
+            onClick={handleDetailedAnalysis}
           >
             Подробный анализ
           </Button>

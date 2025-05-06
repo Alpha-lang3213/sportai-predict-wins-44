@@ -1,9 +1,12 @@
+
 import React, { useState, useEffect } from "react";
 import MatchCard from "./MatchCard";
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
 import { Button } from "@/components/ui/button";
-import { Bookmark, Star } from "lucide-react";
+import { Star } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
+import { useAuth } from "@/contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 // Sample match data
 const matchesData = [
@@ -129,6 +132,8 @@ const MatchList: React.FC<IMatchListProps> = ({ filters = {} }) => {
   const [savedMatches, setSavedMatches] = useState<number[]>([]);
   const [notifiedMatches, setNotifiedMatches] = useState<number[]>([]);
   const { toast } = useToast();
+  const { user } = useAuth();
+  const navigate = useNavigate();
 
   // Apply filters to matches data
   const filteredMatches = matchesData.filter(match => {
@@ -148,6 +153,15 @@ const MatchList: React.FC<IMatchListProps> = ({ filters = {} }) => {
   });
 
   const toggleSaveMatch = (matchId: number) => {
+    if (!user) {
+      toast({
+        title: "Требуется авторизация",
+        description: "Войдите в аккаунт, чтобы добавить матч в избранное",
+      });
+      navigate("/login", { state: { from: '/predictions' } });
+      return;
+    }
+    
     setSavedMatches(prev => {
       if (prev.includes(matchId)) {
         toast({
@@ -166,6 +180,15 @@ const MatchList: React.FC<IMatchListProps> = ({ filters = {} }) => {
   };
 
   const toggleNotification = (matchId: number) => {
+    if (!user) {
+      toast({
+        title: "Требуется авторизация",
+        description: "Войдите в аккаунт, чтобы получать уведомления о матчах",
+      });
+      navigate("/login", { state: { from: '/predictions' } });
+      return;
+    }
+    
     setNotifiedMatches(prev => {
       if (prev.includes(matchId)) {
         toast({
@@ -203,24 +226,15 @@ const MatchList: React.FC<IMatchListProps> = ({ filters = {} }) => {
                 averageOdds={match.averageOdds}
                 roi={match.roi}
               />
-              <div className="absolute top-4 right-4 flex space-x-2">
+              <div className="absolute top-4 right-4">
                 <Button 
                   size="sm" 
                   variant="ghost" 
                   className={`p-1 ${notifiedMatches.includes(match.id) ? 'text-sport-accent' : 'text-gray-400'}`}
-                  onClick={() => toggleNotification(match.id)}
-                  title="Напомнить за 30 минут до начала"
-                >
-                  <Star size={18} className={notifiedMatches.includes(match.id) ? 'fill-sport-accent' : ''} />
-                </Button>
-                <Button 
-                  size="sm" 
-                  variant="ghost" 
-                  className={`p-1 ${savedMatches.includes(match.id) ? 'text-sport-blue-medium' : 'text-gray-400'}`}
                   onClick={() => toggleSaveMatch(match.id)}
                   title="Добавить в избранное"
                 >
-                  <Bookmark size={18} className={savedMatches.includes(match.id) ? 'fill-sport-blue-medium' : ''} />
+                  <Star size={18} className={savedMatches.includes(match.id) ? 'fill-sport-yellow text-sport-yellow' : ''} />
                 </Button>
               </div>
             </div>

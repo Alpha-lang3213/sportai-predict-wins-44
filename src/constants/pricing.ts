@@ -55,3 +55,22 @@ export const pricingFeatures = [
     premium: true
   }
 ];
+
+// Добавляем цены тарифов для использования в разных частях приложения
+export const pricingPlans = {
+  basic: {
+    price: "990 ₽",
+    description: "Идеальное решение для начинающих игроков",
+    popular: false
+  },
+  standard: {
+    price: "2 490 ₽",
+    description: "Полный доступ к AI-прогнозам и инструментам",
+    popular: true
+  },
+  premium: {
+    price: "4 990 ₽",
+    description: "Максимальные возможности для профессионалов",
+    popular: false
+  }
+};
