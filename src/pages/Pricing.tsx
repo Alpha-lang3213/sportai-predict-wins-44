@@ -185,7 +185,7 @@ const Pricing = () => {
                   <div className="flex flex-col items-center">
                     <div className="mb-3 w-40 h-5 bg-[#1a1c24] rounded-lg"></div>
                     <div className="text-xl font-bold text-white mb-3">0 ₽</div>
-                    <div className="h-12 w-full bg-[#1a1] rounded-b-lg"></div>
+                    <div className="h-12 w-full bg-[#1a1] rounded-b-lg py-0 mx-0 rounded-none mt-[132px]"></div>
                   </div>
                   <p className="mt-4 text-sm text-gray-400">Бесплатный план</p>
                 </div>
