@@ -29,16 +29,16 @@ const Header = () => {
 
         {/* Desktop navigation */}
         <nav className="hidden md:flex items-center space-x-6">
-          <Link to="#matches" className="text-gray-300 hover:text-sport-blue-medium transition-colors">
+          <Link to="/#matches" className="text-gray-300 hover:text-sport-blue-medium transition-colors">
             Матчи
           </Link>
-          <Link to="#tools" className="text-gray-300 hover:text-sport-blue-medium transition-colors">
+          <Link to="/#tools" className="text-gray-300 hover:text-sport-blue-medium transition-colors">
             Инструменты
           </Link>
-          <Link to="#stats" className="text-gray-300 hover:text-sport-blue-medium transition-colors">
+          <Link to="/#stats" className="text-gray-300 hover:text-sport-blue-medium transition-colors">
             Статистика
           </Link>
-          <Link to="#pricing" className="text-gray-300 hover:text-sport-blue-medium transition-colors">
+          <Link to="/pricing" className="text-gray-300 hover:text-sport-blue-medium transition-colors">
             Тарифы
           </Link>
           <Button className="bg-sport-accent hover:bg-sport-accent-hover text-white">

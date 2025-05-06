@@ -3,6 +3,7 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Check, X } from "lucide-react";
+import { Link } from "react-router-dom";
 
 interface PlanFeature {
   title: string;
@@ -121,13 +122,15 @@ const PricingCard = ({
         </ul>
       </div>
       
-      <Button 
-        className={`w-full ${popular 
-          ? 'bg-sport-blue-medium hover:bg-sport-blue-light text-white' 
-          : 'bg-transparent text-sport-blue-medium border-2 border-sport-blue-medium hover:bg-sport-blue-medium/10'}`}
-      >
-        {buttonText}
-      </Button>
+      <Link to="/pricing">
+        <Button 
+          className={`w-full ${popular 
+            ? 'bg-sport-blue-medium hover:bg-sport-blue-light text-white' 
+            : 'bg-transparent text-sport-blue-medium border-2 border-sport-blue-medium hover:bg-sport-blue-medium/10'}`}
+        >
+          {buttonText}
+        </Button>
+      </Link>
     </Card>
   );
 };
@@ -174,6 +177,11 @@ const Pricing = () => {
           <p className="text-gray-400 text-sm">
             Все планы включают бесплатную отмену в течение пробного периода. Оплачивайте удобным способом: картой, электронным кошельком или через мобильного оператора.
           </p>
+          <Link to="/pricing">
+            <Button variant="outline" className="mt-6 border-sport-blue-medium text-sport-blue-medium hover:bg-sport-blue-medium hover:text-gray-200">
+              Подробнее о тарифах
+            </Button>
+          </Link>
         </div>
       </div>
     </section>
