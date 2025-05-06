@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Check, X, ChevronDown, ChevronUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -6,6 +5,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import FeaturesTable from "@/components/pricing/FeaturesTable";
 
 const Pricing = () => {
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
@@ -191,49 +191,53 @@ const Pricing = () => {
           </div>
         </section>
 
-        {/* Pricing Comparison Chart */}
+        {/* Pricing Comparison Chart - Updated according to reference */}
         <section className="py-8 px-4">
           <div className="container mx-auto">
-            <div className="bg-sport-blue/70 rounded-xl p-6 neo-blur max-w-4xl mx-auto">
-              <h2 className="text-2xl font-bold mb-6 text-white text-center">Сравнение стоимости тарифов</h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+            <div className="bg-[#1a1c24]/80 rounded-xl p-8 max-w-4xl mx-auto">
+              <h2 className="text-2xl font-bold mb-10 text-white text-center">Сравнение стоимости тарифов</h2>
+              
+              <div className="grid grid-cols-3 gap-6">
+                {/* Базовый */}
                 <div className="text-center">
-                  <h3 className="text-lg mb-2">Базовый</h3>
-                  <div className="bg-gradient-to-b from-sport-blue/30 to-sport-blue/10 h-40 rounded-lg flex items-end justify-center p-4 relative">
-                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-lg text-white">
-                      0 ₽
-                    </div>
-                    <div className="bg-sport-blue-dark h-1/6 w-full rounded-t-lg absolute bottom-0 left-0"></div>
+                  <h3 className="text-lg font-medium mb-4 text-white">Базовый</h3>
+                  <div className="flex flex-col items-center">
+                    <div className="mb-3 w-40 h-5 bg-[#1a1c24] rounded-lg"></div>
+                    <div className="text-xl font-bold text-white mb-3">0 ₽</div>
+                    <div className="h-12 w-full bg-[#1a1c24] rounded-b-lg"></div>
                   </div>
-                  <p className="mt-2 text-sm text-gray-400">Бесплатный план</p>
+                  <p className="mt-4 text-sm text-gray-400">Бесплатный план</p>
                 </div>
                 
+                {/* Стандартный */}
                 <div className="text-center">
-                  <h3 className="text-lg mb-2">Стандартный</h3>
-                  <div className="bg-gradient-to-b from-sport-blue-medium/40 to-sport-blue-medium/10 h-40 rounded-lg flex items-end justify-center p-4 relative">
-                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-xl font-medium text-white">
-                      1 300 ₽
+                  <h3 className="text-lg font-medium mb-4 text-white">Стандартный</h3>
+                  <div className="flex flex-col items-center">
+                    <div className="mb-3 w-40 h-48 bg-[#6646ed]/60 rounded-lg flex items-center justify-center">
+                      <div className="text-2xl font-bold text-white">1 300 ₽</div>
                     </div>
-                    <div className="bg-sport-blue-medium h-3/6 w-full rounded-t-lg absolute bottom-0 left-0"></div>
+                    <div className="h-12 w-full bg-[#6646ed] rounded-b-lg"></div>
                   </div>
-                  <p className="mt-2 text-sm text-gray-400">За 3 дня без автопродления</p>
+                  <p className="mt-4 text-sm text-gray-400">За 3 дня без автопродления</p>
                 </div>
                 
+                {/* Премиум */}
                 <div className="text-center">
-                  <h3 className="text-lg mb-2">Премиум</h3>
-                  <div className="bg-gradient-to-b from-sport-accent/40 to-sport-accent/10 h-40 rounded-lg flex items-end justify-center p-4 relative">
-                    <div className="absolute top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-xl font-medium text-white">
-                      990 ₽
+                  <h3 className="text-lg font-medium mb-4 text-white">Премиум</h3>
+                  <div className="flex flex-col items-center">
+                    <div className="mb-3 w-40 h-24 bg-[#9d5424]/60 rounded-t-lg flex items-center justify-center">
+                      <div className="text-xl font-bold text-white">990 ₽</div>
                     </div>
-                    <div className="absolute top-2/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-xl font-medium text-white">
-                      + 9 900 ₽
+                    <div className="mb-0 w-40 h-24 bg-[#ff6d00]/60 flex items-center justify-center">
+                      <div className="text-xl font-bold text-white">9 900 ₽</div>
                     </div>
-                    <div className="bg-sport-accent h-5/6 w-full rounded-t-lg absolute bottom-0 left-0"></div>
+                    <div className="h-12 w-full bg-[#ff6d00] rounded-b-lg"></div>
                   </div>
-                  <p className="mt-2 text-sm text-gray-400">3 дня + ежемесячная подписка</p>
+                  <p className="mt-4 text-sm text-gray-400">3 дня + ежемесячная подписка</p>
                 </div>
               </div>
-              <p className="text-center text-sm text-gray-400">
+              
+              <p className="text-center text-sm text-gray-400 mt-8">
                 *Премиум тариф включает расширенную аналитику и персонального менеджера
               </p>
             </div>
@@ -245,68 +249,7 @@ const Pricing = () => {
           <div className="container mx-auto">
             <div className="bg-sport-blue/70 rounded-xl p-6 neo-blur max-w-4xl mx-auto">
               <h2 className="text-2xl font-bold mb-6 text-white text-center">Детальное сравнение возможностей</h2>
-              <div className="overflow-x-auto">
-                <table className="w-full">
-                  <thead>
-                    <tr className="border-b border-gray-700">
-                      <th className="text-left py-4 px-4 text-gray-300">Фича</th>
-                      <th className="text-center py-4 px-4">Базовый</th>
-                      <th className="text-center py-4 px-4">Стандартный</th>
-                      <th className="text-center py-4 px-4">Премиум</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr className="border-b border-gray-700">
-                      <td className="py-4 px-4 text-gray-300">Список матчей без вероятностей</td>
-                      <td className="text-center py-4 px-4"><Check size={18} className="text-sport-green mx-auto" /></td>
-                      <td className="text-center py-4 px-4"><Check size={18} className="text-sport-green mx-auto" /></td>
-                      <td className="text-center py-4 px-4"><Check size={18} className="text-sport-green mx-auto" /></td>
-                    </tr>
-                    <tr className="border-b border-gray-700">
-                      <td className="py-4 px-4 text-gray-300">Прогнозы с вероятностями</td>
-                      <td className="text-center py-4 px-4"><X size={18} className="text-gray-500 mx-auto" /></td>
-                      <td className="text-center py-4 px-4"><Check size={18} className="text-sport-green mx-auto" /></td>
-                      <td className="text-center py-4 px-4"><Check size={18} className="text-sport-green mx-auto" /></td>
-                    </tr>
-                    <tr className="border-b border-gray-700">
-                      <td className="py-4 px-4 text-gray-300">Базовая аналитика</td>
-                      <td className="text-center py-4 px-4"><X size={18} className="text-gray-500 mx-auto" /></td>
-                      <td className="text-center py-4 px-4"><Check size={18} className="text-sport-green mx-auto" /></td>
-                      <td className="text-center py-4 px-4"><Check size={18} className="text-sport-green mx-auto" /></td>
-                    </tr>
-                    <tr className="border-b border-gray-700">
-                      <td className="py-4 px-4 text-gray-300">Углубленная аналитика</td>
-                      <td className="text-center py-4 px-4"><X size={18} className="text-gray-500 mx-auto" /></td>
-                      <td className="text-center py-4 px-4"><X size={18} className="text-gray-500 mx-auto" /></td>
-                      <td className="text-center py-4 px-4"><Check size={18} className="text-sport-green mx-auto" /></td>
-                    </tr>
-                    <tr className="border-b border-gray-700">
-                      <td className="py-4 px-4 text-gray-300">Персональные рекомендации</td>
-                      <td className="text-center py-4 px-4"><X size={18} className="text-gray-500 mx-auto" /></td>
-                      <td className="text-center py-4 px-4"><X size={18} className="text-gray-500 mx-auto" /></td>
-                      <td className="text-center py-4 px-4"><Check size={18} className="text-sport-green mx-auto" /></td>
-                    </tr>
-                    <tr className="border-b border-gray-700">
-                      <td className="py-4 px-4 text-gray-300">Подписка на Telegram-канал</td>
-                      <td className="text-center py-4 px-4"><Check size={18} className="text-sport-green mx-auto" /></td>
-                      <td className="text-center py-4 px-4"><Check size={18} className="text-sport-green mx-auto" /></td>
-                      <td className="text-center py-4 px-4"><Check size={18} className="text-sport-green mx-auto" /></td>
-                    </tr>
-                    <tr className="border-b border-gray-700">
-                      <td className="py-4 px-4 text-gray-300">Email-уведомления</td>
-                      <td className="text-center py-4 px-4"><X size={18} className="text-gray-500 mx-auto" /></td>
-                      <td className="text-center py-4 px-4"><Check size={18} className="text-sport-green mx-auto" /></td>
-                      <td className="text-center py-4 px-4"><Check size={18} className="text-sport-green mx-auto" /></td>
-                    </tr>
-                    <tr>
-                      <td className="py-4 px-4 text-gray-300">Персональный менеджер</td>
-                      <td className="text-center py-4 px-4"><X size={18} className="text-gray-500 mx-auto" /></td>
-                      <td className="text-center py-4 px-4"><X size={18} className="text-gray-500 mx-auto" /></td>
-                      <td className="text-center py-4 px-4"><Check size={18} className="text-sport-green mx-auto" /></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+              <FeaturesTable />
             </div>
           </div>
         </section>
@@ -411,7 +354,7 @@ const Pricing = () => {
                   <AccordionContent className="text-gray-300 pt-2">
                     Персональные рекомендации в Премиум-тарифе включают индивидуально подобранные ставки, основанные 
                     на вашем профиле риска и предпочтениях по видам спорта. Наш AI изучает ваши предыдущие ставки, 
-                    анализирует успешные стратегии и предлагает оптимальные варианты с наибольшей вероятностью выигрыша 
+                    анализирует успешные стратегии и предлагает оптимальны�� варианты с наибольшей вероятностью выигрыша 
                     в текущей ситуации. Кроме того, персональный менеджер помогает адаптировать эти рекомендации под 
                     ваши конкретные цели.
                   </AccordionContent>

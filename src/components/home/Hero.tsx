@@ -1,11 +1,14 @@
+
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
+
 const Hero = () => {
   const [timeLeft, setTimeLeft] = useState({
     hours: 0,
     minutes: 0,
     seconds: 0
   });
+
   useEffect(() => {
     // Set a future date for an important match
     const matchTime = new Date();
@@ -29,9 +32,11 @@ const Hero = () => {
     }, 1000);
     return () => clearInterval(timer);
   }, []);
+
   const formatTime = (value: number) => {
     return value < 10 ? `0${value}` : value;
   };
+
   return <div className="gradient-bg min-h-[90vh] pt-24 pb-16 px-4 flex items-center relative overflow-hidden">
       {/* Decorative background elements */}
       <div className="absolute inset-0 overflow-hidden">
@@ -92,64 +97,86 @@ const Hero = () => {
           
           <div className="hidden lg:flex justify-center">
             <div className="relative w-full h-96">
-              {/* Neural Network Visualization */}
+              {/* AI Network Visualization with logos */}
               <div className="absolute inset-0 flex items-center justify-center bg-[#2b2b2b]/0 mx-0 rounded-none py-0 my-0">
-                {/* First row of network nodes */}
+                {/* Input layer - AI logos */}
                 <div className="absolute left-0 top-0 flex flex-col gap-6">
-                  {[...Array(5)].map((_, i) => <div key={`input-${i}`} className={`w-8 h-8 rounded-full bg-sport-blue-medium/80 animate-pulse-light`} style={{
-                  animationDelay: `${i * 0.2}s`
-                }}></div>)}
+                  {[...Array(5)].map((_, i) => (
+                    <div key={`input-${i}`} className="w-12 h-12 rounded-full bg-[#6646ed]/80 flex items-center justify-center text-white font-bold border border-white/20">
+                      AI
+                    </div>
+                  ))}
                 </div>
                 
-                {/* Second row of network nodes */}
+                {/* Hidden layer 1 - AI logos */}
                 <div className="absolute left-[25%] top-4 flex flex-col gap-8">
-                  {[...Array(4)].map((_, i) => <div key={`hidden1-${i}`} className={`w-10 h-10 rounded-full bg-sport-accent/80 animate-pulse-light`} style={{
-                  animationDelay: `${i * 0.3}s`
-                }}></div>)}
+                  {[...Array(4)].map((_, i) => (
+                    <div key={`hidden1-${i}`} className="w-14 h-14 rounded-full bg-[#f97316]/80 flex items-center justify-center text-white font-bold border border-white/20">
+                      ML
+                    </div>
+                  ))}
                 </div>
                 
-                {/* Third row of network nodes */}
+                {/* Hidden layer 2 - AI logos */}
                 <div className="absolute left-[50%] top-8 flex flex-col gap-10">
-                  {[...Array(3)].map((_, i) => <div key={`hidden2-${i}`} className={`w-12 h-12 rounded-full bg-sport-blue-light/80 animate-pulse-light`} style={{
-                  animationDelay: `${i * 0.4}s`
-                }}></div>)}
+                  {[...Array(3)].map((_, i) => (
+                    <div key={`hidden2-${i}`} className="w-16 h-16 rounded-full bg-[#d946ef]/80 flex items-center justify-center text-white font-bold border border-white/20">
+                      DL
+                    </div>
+                  ))}
                 </div>
                 
-                {/* Connection lines - SVG overlay */}
-                <svg className="absolute inset-0 w-full h-full" style={{
-                zIndex: -1
-              }}>
-                  {/* Connections from first to second row */}
-                  {[...Array(5)].map((_, i) => [...Array(4)].map((_, j) => <line key={`line1-${i}-${j}`} x1="32" y1={16 + i * 48} x2={`${0.25 * 384}`} y2={20 + j * 64} stroke="#8B5CF6" strokeWidth="2" strokeOpacity="0.3" className="animate-pulse-light" style={{
-                  animationDelay: `${(i + j) * 0.1}s`
-                }} />))}
+                {/* Connection lines - SVG overlay with straight lines */}
+                <svg className="absolute inset-0 w-full h-full" style={{zIndex: -1}}>
+                  {/* Connections from first to second layer - straight lines */}
+                  {[...Array(5)].map((_, i) => [...Array(4)].map((_, j) => (
+                    <line 
+                      key={`line1-${i}-${j}`} 
+                      x1="36" 
+                      y1={24 + i * 48} 
+                      x2={`${0.25 * 384 - 7}`} 
+                      y2={28 + j * 64} 
+                      stroke="#8B5CF6" 
+                      strokeWidth="2" 
+                      strokeOpacity="0.5" 
+                    />
+                  )))}
                   
-                  {/* Connections from second to third row */}
-                  {[...Array(4)].map((_, i) => [...Array(3)].map((_, j) => <line key={`line2-${i}-${j}`} x1={`${0.25 * 384 + 20}`} y1={20 + i * 64} x2={`${0.5 * 384 + 24}`} y2={32 + j * 80} stroke="#F97316" strokeWidth="2" strokeOpacity="0.3" className="animate-pulse-light" style={{
-                  animationDelay: `${(i + j) * 0.1 + 0.5}s`
-                }} />))}
+                  {/* Connections from second to third layer - straight lines */}
+                  {[...Array(4)].map((_, i) => [...Array(3)].map((_, j) => (
+                    <line 
+                      key={`line2-${i}-${j}`} 
+                      x1={`${0.25 * 384 + 28}`} 
+                      y1={28 + i * 64} 
+                      x2={`${0.5 * 384 + 32}`} 
+                      y2={40 + j * 80} 
+                      stroke="#F97316" 
+                      strokeWidth="2" 
+                      strokeOpacity="0.5" 
+                    />
+                  )))}
                   
-                  {/* Connections from third row to final point */}
-                  {[...Array(3)].map((_, i) => <line key={`line3-${i}`} x1={`${0.5 * 384 + 24}`} y1={32 + i * 80} x2={`${0.85 * 384}`} y2="192" stroke="#D946EF" strokeWidth="2" strokeOpacity="0.3" className="animate-pulse-light" style={{
-                  animationDelay: `${i * 0.1 + 1}s`
-                }} />)}
+                  {/* Connections from third layer to final point - straight lines */}
+                  {[...Array(3)].map((_, i) => (
+                    <line 
+                      key={`line3-${i}`} 
+                      x1={`${0.5 * 384 + 32}`} 
+                      y1={40 + i * 80} 
+                      x2={`${0.85 * 384}`} 
+                      y2="192" 
+                      stroke="#D946EF" 
+                      strokeWidth="2" 
+                      strokeOpacity="0.5" 
+                    />
+                  ))}
                 </svg>
                 
-                {/* Final aggregation point */}
+                {/* Final aggregation point - phone icon */}
                 <div className="absolute right-[15%] top-[calc(50%-32px)] w-16 h-16 bg-gradient-to-r from-sport-accent via-sport-blue-medium to-sport-blue-light rounded-xl animate-glow flex items-center justify-center">
                   <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-900">
                     <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
                   </svg>
                 </div>
-                
-                {/* Data flow particles */}
-                <div className="absolute left-[7%] top-[10%] w-2 h-2 bg-sport-accent rounded-full animate-data-flow"></div>
-                <div className="absolute left-[12%] top-[30%] w-2 h-2 bg-sport-blue-medium rounded-full animate-data-flow" style={{
-                animationDelay: "0.5s"
-              }}></div>
-                <div className="absolute left-[18%] top-[50%] w-2 h-2 bg-sport-blue-light rounded-full animate-data-flow" style={{
-                animationDelay: "1s"
-              }}></div>
               </div>
             </div>
           </div>
@@ -157,4 +184,5 @@ const Hero = () => {
       </div>
     </div>;
 };
+
 export default Hero;
