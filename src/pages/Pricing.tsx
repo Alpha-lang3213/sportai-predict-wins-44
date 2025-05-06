@@ -185,7 +185,7 @@ const Pricing = () => {
                   <div className="flex flex-col items-center">
                     <div className="mb-3 w-40 h-5 bg-[#1a1c24] rounded-lg"></div>
                     <div className="text-xl font-bold text-white mb-3">0 ₽</div>
-                    <div className="h-12 w-full bg-[#1a1] rounded-b-lg py-0 mx-0 rounded-none mt-[132px]"></div>
+                    <div className="h-12 w-full bg-[#1a1] rounded-b-lg mt-[142px] rounded-sm"></div>
                   </div>
                   <p className="mt-4 text-sm text-gray-400">Бесплатный план</p>
                 </div>
@@ -197,7 +197,7 @@ const Pricing = () => {
                     <div className="mb-3 w-40 h-48 bg-[#6646ed]/60 rounded-lg flex items-center justify-center">
                       <div className="text-2xl font-bold text-white">1 300 ₽</div>
                     </div>
-                    <div className="h-12 w-full bg-[#6646ed] rounded-b-lg"></div>
+                    <div className="h-12 w-full bg-[#6646ed] rounded-b-lg mt-[10px]"></div>
                   </div>
                   <p className="mt-4 text-sm text-gray-400">За 3 дня без автопродления</p>
                 </div>
@@ -212,7 +212,7 @@ const Pricing = () => {
                     <div className="mb-0 w-40 h-24 bg-[#ff6d00]/60 flex items-center justify-center">
                       <div className="text-xl font-bold text-white">9 900 ₽</div>
                     </div>
-                    <div className="h-12 w-full bg-[#ff6d00] rounded-b-lg"></div>
+                    <div className="h-12 w-full bg-[#ff6d00] rounded-b-lg mt-[10px]"></div>
                   </div>
                   <p className="mt-4 text-sm text-gray-400">3 дня + ежемесячная подписка</p>
                 </div>
