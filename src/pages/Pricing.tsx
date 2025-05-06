@@ -187,7 +187,7 @@ const Pricing = () => {
                     <div className="text-xl font-bold text-white mb-3 my-[51px]">0 ₽</div>
                     <div className="h-12 w-full bg-[#1a1] rounded-b-lg mt-[52px]"></div>
                   </div>
-                  <p className="mt-4 text-sm text-gray-400 my-px">Бесплатный план</p>
+                  <p className="mt-4 text-sm text-gray-400 my-px text-center font-extralight">Бесплатный план</p>
                 </div>
                 
                 {/* Стандартный */}
