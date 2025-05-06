@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Football, Hockey, Basketball, Tennis, Search, Calendar, Flag } from "lucide-react";
+import { Search, Calendar, Flag, ActivitySquare, Dumbbell, Trophy, CircleDot } from "lucide-react";
 
 const MatchFilters: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -34,7 +34,7 @@ const MatchFilters: React.FC = () => {
               className={`px-3 ${selectedSport === "football" ? "bg-sport-blue-medium" : "border-sport-blue-medium text-gray-400"}`}
               onClick={() => setSelectedSport("football")}
             >
-              <Football className="w-4 h-4 mr-1" /> Футбол
+              <Trophy className="w-4 h-4 mr-1" /> Футбол
             </Button>
             <Button 
               variant={selectedSport === "hockey" ? "default" : "outline"}
@@ -42,7 +42,7 @@ const MatchFilters: React.FC = () => {
               className={`px-3 ${selectedSport === "hockey" ? "bg-sport-blue-medium" : "border-sport-blue-medium text-gray-400"}`}
               onClick={() => setSelectedSport("hockey")}
             >
-              <Hockey className="w-4 h-4 mr-1" /> Хоккей
+              <ActivitySquare className="w-4 h-4 mr-1" /> Хоккей
             </Button>
           </div>
           <div className="flex space-x-2">
@@ -52,7 +52,7 @@ const MatchFilters: React.FC = () => {
               className={`px-3 ${selectedSport === "basketball" ? "bg-sport-blue-medium" : "border-sport-blue-medium text-gray-400"}`}
               onClick={() => setSelectedSport("basketball")}
             >
-              <Basketball className="w-4 h-4 mr-1" /> Баскетбол
+              <CircleDot className="w-4 h-4 mr-1" /> Баскетбол
             </Button>
             <Button 
               variant={selectedSport === "tennis" ? "default" : "outline"}
@@ -60,7 +60,7 @@ const MatchFilters: React.FC = () => {
               className={`px-3 ${selectedSport === "tennis" ? "bg-sport-blue-medium" : "border-sport-blue-medium text-gray-400"}`}
               onClick={() => setSelectedSport("tennis")}
             >
-              <Tennis className="w-4 h-4 mr-1" /> Теннис
+              <Dumbbell className="w-4 h-4 mr-1" /> Теннис
             </Button>
           </div>
         </div>
