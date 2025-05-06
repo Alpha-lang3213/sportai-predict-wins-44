@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Check, X } from "lucide-react";
 import { Link } from "react-router-dom";
+import { pricingFeatures } from "@/constants/pricing";
 
 interface PlanFeature {
   title: string;
@@ -12,75 +13,16 @@ interface PlanFeature {
   premium: boolean;
 }
 
-const features: PlanFeature[] = [
-  {
-    title: "AI-прогнозы (ограниченные)",
-    basic: true,
-    standard: true,
-    premium: true
-  },
-  {
-    title: "Базовая статистика",
-    basic: true,
-    standard: true,
-    premium: true
-  },
-  {
-    title: "Калькулятор прибыли",
-    basic: true,
-    standard: true,
-    premium: true
-  },
-  {
-    title: "AI-прогнозы (полные)",
-    basic: false,
-    standard: true,
-    premium: true
-  },
-  {
-    title: "Подробный анализ матчей",
-    basic: false,
-    standard: true,
-    premium: true
-  },
-  {
-    title: "Симулятор стратегий",
-    basic: false,
-    standard: true,
-    premium: true
-  },
-  {
-    title: "Персональные консультации",
-    basic: false,
-    standard: false,
-    premium: true
-  },
-  {
-    title: "VIP-прогнозы",
-    basic: false,
-    standard: false,
-    premium: true
-  },
-  {
-    title: "Приоритетная поддержка",
-    basic: false,
-    standard: false,
-    premium: true
-  }
-];
-
 const PricingCard = ({ 
   title, 
   price, 
   description, 
-  features, 
   popular = false,
   buttonText = "Выбрать план" 
 }: { 
   title: string; 
   price: string; 
   description: string; 
-  features: PlanFeature[];
   popular?: boolean;
   buttonText?: string;
 }) => {
@@ -103,20 +45,16 @@ const PricingCard = ({
       
       <div className="flex-grow">
         <ul className="space-y-3 mb-6">
-          {features.map((feature, index) => (
+          {pricingFeatures.map((feature, index) => (
             <li key={index} className="flex items-center">
-              {feature.title === features[index].title ? (
-                <>
-                  {feature[title.toLowerCase() as keyof PlanFeature] ? (
-                    <Check size={18} className="text-sport-green mr-2 flex-shrink-0" />
-                  ) : (
-                    <X size={18} className="text-gray-500 mr-2 flex-shrink-0" />
-                  )}
-                  <span className={`text-sm ${feature[title.toLowerCase() as keyof PlanFeature] ? 'text-gray-200' : 'text-gray-500'}`}>
-                    {feature.title}
-                  </span>
-                </>
-              ) : null}
+              {feature[title.toLowerCase() as keyof PlanFeature] ? (
+                <Check size={18} className="text-sport-green mr-2 flex-shrink-0" />
+              ) : (
+                <X size={18} className="text-gray-500 mr-2 flex-shrink-0" />
+              )}
+              <span className={`text-sm ${feature[title.toLowerCase() as keyof PlanFeature] ? 'text-gray-200' : 'text-gray-500'}`}>
+                {feature.title}
+              </span>
             </li>
           ))}
         </ul>
@@ -151,7 +89,6 @@ const Pricing = () => {
             title="Базовый"
             price="990 ₽"
             description="Идеальное решение для начинающих игроков"
-            features={features}
             buttonText="Бесплатно 7 дней"
           />
           
@@ -159,7 +96,6 @@ const Pricing = () => {
             title="Стандарт"
             price="2 490 ₽"
             description="Полный доступ к AI-прогнозам и инструментам"
-            features={features}
             popular={true}
             buttonText="Бесплатно 7 дней"
           />
@@ -168,7 +104,6 @@ const Pricing = () => {
             title="Премиум"
             price="4 990 ₽"
             description="Максимальные возможности для профессионалов"
-            features={features}
             buttonText="Бесплатно 7 дней"
           />
         </div>

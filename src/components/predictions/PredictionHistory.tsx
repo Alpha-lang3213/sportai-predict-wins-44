@@ -2,7 +2,6 @@
 import React, { useState } from "react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Search, Calendar, Filter } from "lucide-react";
@@ -66,7 +65,7 @@ const PredictionHistory: React.FC = () => {
   const [resultFilter, setResultFilter] = useState("all");
 
   return (
-    <div>
+    <div className="w-full">
       <h2 className="text-2xl font-bold text-center mb-8 text-gradient">История прогнозов</h2>
       
       {/* Filters */}
@@ -89,39 +88,43 @@ const PredictionHistory: React.FC = () => {
             
             <div>
               <label className="text-sm text-gray-400 block mb-2">Период</label>
-              <Select 
-                defaultValue={dateFilter} 
-                onValueChange={setDateFilter}
-              >
-                <SelectTrigger className="bg-sport-blue border-sport-blue-medium/30 text-gray-300">
-                  <Calendar className="w-4 h-4 mr-2" />
-                  <SelectValue placeholder="Выберите период" />
-                </SelectTrigger>
-                <SelectContent className="bg-sport-blue border-sport-blue-medium/30 text-gray-300">
-                  <SelectItem value="all">Все время</SelectItem>
-                  <SelectItem value="week">Последняя неделя</SelectItem>
-                  <SelectItem value="month">Последний месяц</SelectItem>
-                  <SelectItem value="3months">Последние 3 месяца</SelectItem>
-                </SelectContent>
-              </Select>
+              <div className="relative w-full">
+                <Select 
+                  defaultValue={dateFilter} 
+                  onValueChange={setDateFilter}
+                >
+                  <SelectTrigger className="bg-sport-blue border-sport-blue-medium/30 text-gray-300 w-full">
+                    <Calendar className="w-4 h-4 mr-2" />
+                    <SelectValue placeholder="Выберите период" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-sport-blue border-sport-blue-medium/30 text-gray-300 w-full">
+                    <SelectItem value="all">Все время</SelectItem>
+                    <SelectItem value="week">Последняя неделя</SelectItem>
+                    <SelectItem value="month">Последний месяц</SelectItem>
+                    <SelectItem value="3months">Последние 3 месяца</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
             
             <div>
               <label className="text-sm text-gray-400 block mb-2">Результат</label>
-              <Select 
-                defaultValue={resultFilter}
-                onValueChange={setResultFilter}
-              >
-                <SelectTrigger className="bg-sport-blue border-sport-blue-medium/30 text-gray-300">
-                  <Filter className="w-4 h-4 mr-2" />
-                  <SelectValue placeholder="Фильтр по результату" />
-                </SelectTrigger>
-                <SelectContent className="bg-sport-blue border-sport-blue-medium/30 text-gray-300">
-                  <SelectItem value="all">Все результаты</SelectItem>
-                  <SelectItem value="success">Успешные</SelectItem>
-                  <SelectItem value="fail">Неудачные</SelectItem>
-                </SelectContent>
-              </Select>
+              <div className="relative w-full">
+                <Select 
+                  defaultValue={resultFilter}
+                  onValueChange={setResultFilter}
+                >
+                  <SelectTrigger className="bg-sport-blue border-sport-blue-medium/30 text-gray-300 w-full">
+                    <Filter className="w-4 h-4 mr-2" />
+                    <SelectValue placeholder="Фильтр по результату" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-sport-blue border-sport-blue-medium/30 text-gray-300 w-full z-50">
+                    <SelectItem value="all">Все результаты</SelectItem>
+                    <SelectItem value="success">Успешные</SelectItem>
+                    <SelectItem value="fail">Неудачные</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
           </div>
         </CardContent>

@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { useState } from "react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import PredictionStats from "@/components/predictions/PredictionStats";
@@ -11,6 +11,18 @@ import SavedMatches from "@/components/predictions/SavedMatches";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const Predictions: React.FC = () => {
+  const [filters, setFilters] = useState({
+    searchQuery: "",
+    selectedSport: "all",
+    selectedDate: "today",
+    selectedStatus: "upcoming",
+    showExpress: false
+  });
+
+  const handleFilterChange = (newFilters: any) => {
+    setFilters(newFilters);
+  };
+
   return (
     <div className="min-h-screen flex flex-col bg-sport-blue-dark">
       <Header />
@@ -50,8 +62,8 @@ const Predictions: React.FC = () => {
               </TabsList>
 
               <TabsContent value="upcoming">
-                <MatchFilters />
-                <MatchList />
+                <MatchFilters onFilterChange={handleFilterChange} />
+                <MatchList filters={filters} />
               </TabsContent>
 
               <TabsContent value="hot">

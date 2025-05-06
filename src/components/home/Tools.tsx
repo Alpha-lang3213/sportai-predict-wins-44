@@ -1,7 +1,8 @@
 
-import React from "react";
+import React, { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 interface ToolCardProps {
   title: string;
@@ -22,7 +23,7 @@ const ToolCard = ({ title, description, icon, dialogContent }: ToolCardProps) =>
           <p className="text-gray-600">{description}</p>
         </Card>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[600px]">
+      <DialogContent className="sm:max-w-[600px] bg-sport-blue border border-sport-blue-medium/30 text-white">
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
         </DialogHeader>
@@ -33,6 +34,71 @@ const ToolCard = ({ title, description, icon, dialogContent }: ToolCardProps) =>
 };
 
 const Tools = () => {
+  // State for profit calculator
+  const [bankroll, setBankroll] = useState<number>(10000);
+  const [betSize, setBetSize] = useState<number>(5);
+  const [avgOdds, setAvgOdds] = useState<number>(1.85);
+  const [period, setPeriod] = useState<number>(6);
+  
+  // Calculate profit
+  const calculateProfit = () => {
+    const profitPerMonth = bankroll * (betSize / 100) * (avgOdds - 1) * 10; // Simplified calculation
+    const totalProfit = profitPerMonth * period;
+    const roi = (totalProfit / bankroll) * 100;
+    const finalBankroll = bankroll + totalProfit;
+    
+    return {
+      profit: Math.round(totalProfit),
+      roi: Math.round(roi * 10) / 10,
+      finalBankroll: Math.round(finalBankroll)
+    };
+  };
+  
+  const profitResults = calculateProfit();
+  
+  // State for strategy simulator
+  const [selectedStrategy, setSelectedStrategy] = useState<string>("flat");
+  
+  // Strategy descriptions and results
+  const strategyInfo = {
+    flat: {
+      description: "Флэт — стратегия, при которой каждая ставка имеет фиксированный размер, не зависящий от результатов предыдущих ставок. Это самая простая и безопасная стратегия, идеально подходящая для начинающих игроков.",
+      profit: "+15.4%",
+      drawdown: "-8.2%",
+      stability: "Высокая"
+    },
+    martingale: {
+      description: "Мартингейл — стратегия удвоения ставки после каждого проигрыша. Теоретически позволяет вернуть все потери при выигрыше, но требует большого банкролла и несёт высокий риск.",
+      profit: "+24.7%",
+      drawdown: "-35.4%",
+      stability: "Низкая"
+    },
+    kelly: {
+      description: "Критерий Келли — математический метод определения оптимального размера ставки в зависимости от вероятности исхода и предполагаемого преимущества. Максимизирует рост банкролла в долгосрочной перспективе.",
+      profit: "+18.9%",
+      drawdown: "-12.6%",
+      stability: "Средняя"
+    },
+    value: {
+      description: "Value betting — стратегия поиска ставок с положительным математическим ожиданием, когда вероятность события выше, чем заложено в коэффициенте букмекера. Требует хорошего анализа и понимания рынка.",
+      profit: "+22.1%",
+      drawdown: "-14.8%",
+      stability: "Средняя"
+    },
+    custom: {
+      description: "Пользовательская стратегия позволяет настроить собственные параметры управления банкроллом и риском для оптимизации результатов под ваш стиль игры и предпочтения.",
+      profit: "+19.3%",
+      drawdown: "-17.5%",
+      stability: "Варьируется"
+    }
+  };
+  
+  const currentStrategy = strategyInfo[selectedStrategy as keyof typeof strategyInfo];
+  
+  // Risk manager state
+  const [dailyLimit, setDailyLimit] = useState<number>(1000);
+  const [maxBetSize, setMaxBetSize] = useState<number>(5);
+
   return (
     <section id="tools" className="py-16 px-4">
       <div className="container mx-auto">
@@ -63,10 +129,10 @@ const Tools = () => {
               <div className="p-4">
                 <div className="mb-6">
                   <h3 className="font-semibold text-lg mb-2">Как это работает</h3>
-                  <p className="text-gray-600 mb-4">
+                  <p className="text-gray-300 mb-4">
                     Наш AI анализирует более 1000 различных факторов для каждого матча, включая:
                   </p>
-                  <ul className="list-disc pl-5 space-y-2 text-gray-600">
+                  <ul className="list-disc pl-5 space-y-2 text-gray-300">
                     <li>Историческую статистику команд и игроков</li>
                     <li>Текущую форму и последние результаты</li>
                     <li>Травмы и дисквалификации</li>
@@ -77,20 +143,20 @@ const Tools = () => {
                   </ul>
                 </div>
                 
-                <div className="p-4 bg-gray-50 rounded-lg mb-6">
+                <div className="p-4 bg-sport-blue-dark/50 rounded-lg mb-6">
                   <div className="flex items-center mb-2">
                     <div className="w-4 h-4 bg-sport-blue-medium rounded-full mr-2"></div>
                     <h4 className="font-semibold">Точность прогнозов</h4>
                   </div>
-                  <p className="text-gray-600 text-sm">
+                  <p className="text-gray-300 text-sm">
                     Средняя точность наших AI-прогнозов составляет 78%, что значительно выше
                     среднего показателя среди других сервисов ставок.
                   </p>
                 </div>
                 
-                <div className="bg-white rounded-lg p-4 border border-gray-100">
+                <div className="bg-sport-blue-dark/60 rounded-lg p-4 border border-sport-blue-medium/30">
                   <div className="mb-4 font-semibold">Пример AI-анализа для матча</div>
-                  <div className="h-40 bg-gray-100 rounded-lg flex items-center justify-center text-gray-400">
+                  <div className="h-40 bg-sport-blue-dark/70 rounded-lg flex items-center justify-center text-gray-400">
                     Интерактивная визуализация анализа (доступно в Pro-тарифе)
                   </div>
                 </div>
@@ -119,79 +185,87 @@ const Tools = () => {
               <div className="p-4">
                 <div className="mb-6">
                   <h3 className="font-semibold text-lg mb-2">Калькулятор прибыли</h3>
-                  <p className="text-gray-600 mb-4">
+                  <p className="text-gray-300 mb-4">
                     Рассчитайте потенциальную прибыль на основе вашей стратегии ставок, начального банкролла и исторических данных.
                   </p>
                 </div>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-medium text-gray-300 mb-1">
                       Начальный банкролл
                     </label>
                     <input
                       type="number"
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md"
+                      className="w-full px-3 py-2 border border-gray-600 rounded-md bg-sport-blue-dark/60 text-white"
                       placeholder="10000"
+                      value={bankroll}
+                      onChange={(e) => setBankroll(Number(e.target.value))}
                     />
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-medium text-gray-300 mb-1">
                       Размер ставки (%)
                     </label>
                     <input
                       type="number"
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md"
+                      className="w-full px-3 py-2 border border-gray-600 rounded-md bg-sport-blue-dark/60 text-white"
                       placeholder="5"
+                      value={betSize}
+                      onChange={(e) => setBetSize(Number(e.target.value))}
                     />
                   </div>
                 </div>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-medium text-gray-300 mb-1">
                       Средний коэффициент
                     </label>
                     <input
                       type="number"
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md"
+                      className="w-full px-3 py-2 border border-gray-600 rounded-md bg-sport-blue-dark/60 text-white"
                       placeholder="1.85"
                       step="0.01"
+                      value={avgOdds}
+                      onChange={(e) => setAvgOdds(Number(e.target.value))}
                     />
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-medium text-gray-300 mb-1">
                       Период (месяцев)
                     </label>
                     <input
                       type="number"
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md"
+                      className="w-full px-3 py-2 border border-gray-600 rounded-md bg-sport-blue-dark/60 text-white"
                       placeholder="6"
+                      value={period}
+                      onChange={(e) => setPeriod(Number(e.target.value))}
                     />
                   </div>
                 </div>
                 
-                <div className="bg-gray-50 p-4 rounded-lg mb-6">
+                <div className="bg-sport-blue-dark/50 p-4 rounded-lg mb-6">
                   <div className="font-semibold text-center mb-4">Прогнозируемый результат</div>
                   <div className="flex justify-between items-center">
                     <div className="text-center">
-                      <p className="text-gray-600 text-sm">Прибыль</p>
-                      <p className="text-sport-green text-xl font-bold">+8,540 ₽</p>
+                      <p className="text-gray-300 text-sm">Прибыль</p>
+                      <p className="text-sport-green text-xl font-bold">+{profitResults.profit} ₽</p>
                     </div>
                     <div className="text-center">
-                      <p className="text-gray-600 text-sm">ROI</p>
-                      <p className="text-sport-green text-xl font-bold">+85.4%</p>
+                      <p className="text-gray-300 text-sm">ROI</p>
+                      <p className="text-sport-green text-xl font-bold">+{profitResults.roi}%</p>
                     </div>
                     <div className="text-center">
-                      <p className="text-gray-600 text-sm">Банкролл</p>
-                      <p className="text-sport-blue-medium text-xl font-bold">18,540 ₽</p>
+                      <p className="text-gray-300 text-sm">Банкролл</p>
+                      <p className="text-sport-blue-medium text-xl font-bold">{profitResults.finalBankroll} ₽</p>
                     </div>
                   </div>
                 </div>
                 
-                <p className="text-xs text-gray-500">
+                <p className="text-xs text-gray-400">
                   * Результаты калькулятора основаны на исторической точности прогнозов и не гарантируют будущую прибыль.
                 </p>
               </div>
@@ -210,16 +284,20 @@ const Tools = () => {
               <div className="p-4">
                 <div className="mb-6">
                   <h3 className="font-semibold text-lg mb-2">Симулятор стратегий</h3>
-                  <p className="text-gray-600 mb-4">
+                  <p className="text-gray-300 mb-4">
                     Протестируйте различные стратегии ставок на исторических данных, чтобы найти наиболее эффективную.
                   </p>
                 </div>
                 
                 <div className="mb-6">
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-gray-300 mb-1">
                     Выберите стратегию
                   </label>
-                  <select className="w-full px-3 py-2 border border-gray-300 rounded-md">
+                  <select 
+                    className="w-full px-3 py-2 border border-gray-600 rounded-md bg-sport-blue-dark/60 text-white"
+                    value={selectedStrategy}
+                    onChange={(e) => setSelectedStrategy(e.target.value)}
+                  >
                     <option value="flat">Флэт (одинаковые ставки)</option>
                     <option value="martingale">Мартингейл (удвоение после проигрыша)</option>
                     <option value="kelly">Критерий Келли</option>
@@ -228,32 +306,32 @@ const Tools = () => {
                   </select>
                 </div>
                 
-                <div className="bg-white rounded-lg border p-4 mb-6">
+                <div className="bg-sport-blue-dark/60 rounded-lg border border-sport-blue-medium/30 p-4 mb-6">
                   <div className="font-medium mb-2">Описание стратегии</div>
-                  <p className="text-gray-600 text-sm">
-                    Флэт — стратегия, при которой каждая ставка имеет фиксированный размер, не зависящий от результатов предыдущих ставок. Это самая простая и безопасная стратегия, идеально подходящая для начинающих игроков.
+                  <p className="text-gray-300 text-sm">
+                    {currentStrategy.description}
                   </p>
                 </div>
                 
                 <div className="mb-6">
                   <div className="font-semibold mb-2">Результаты симуляции (последние 100 ставок)</div>
-                  <div className="h-48 bg-gray-100 rounded-lg flex items-center justify-center text-gray-400">
+                  <div className="h-48 bg-sport-blue-dark/70 rounded-lg flex items-center justify-center text-gray-400">
                     График результатов симуляции (доступно в Pro-тарифе)
                   </div>
                 </div>
                 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <div className="text-center p-3 bg-gray-50 rounded-lg">
-                    <p className="text-gray-600 text-sm">Прибыль</p>
-                    <p className="text-sport-green text-xl font-bold">+15.4%</p>
+                  <div className="text-center p-3 bg-sport-blue-dark/50 rounded-lg">
+                    <p className="text-gray-300 text-sm">Прибыль</p>
+                    <p className="text-sport-green text-xl font-bold">{currentStrategy.profit}</p>
                   </div>
-                  <div className="text-center p-3 bg-gray-50 rounded-lg">
-                    <p className="text-gray-600 text-sm">Макс. просадка</p>
-                    <p className="text-sport-accent text-xl font-bold">-8.2%</p>
+                  <div className="text-center p-3 bg-sport-blue-dark/50 rounded-lg">
+                    <p className="text-gray-300 text-sm">Макс. просадка</p>
+                    <p className="text-sport-accent text-xl font-bold">{currentStrategy.drawdown}</p>
                   </div>
-                  <div className="text-center p-3 bg-gray-50 rounded-lg">
-                    <p className="text-gray-600 text-sm">Стабильность</p>
-                    <p className="text-sport-blue-medium text-xl font-bold">Высокая</p>
+                  <div className="text-center p-3 bg-sport-blue-dark/50 rounded-lg">
+                    <p className="text-gray-300 text-sm">Стабильность</p>
+                    <p className="text-sport-blue-medium text-xl font-bold">{currentStrategy.stability}</p>
                   </div>
                 </div>
               </div>
@@ -273,7 +351,7 @@ const Tools = () => {
               <div className="p-4">
                 <div className="mb-6">
                   <h3 className="font-semibold text-lg mb-2">Персональный риск-менеджер</h3>
-                  <p className="text-gray-600 mb-4">
+                  <p className="text-gray-300 mb-4">
                     Индивидуальные рекомендации по управлению рисками, основанные на вашем профиле и истории ставок.
                   </p>
                 </div>
@@ -286,14 +364,14 @@ const Tools = () => {
                     </svg>
                     <h4 className="font-semibold">Ваш профиль риска</h4>
                   </div>
-                  <p className="text-gray-600 text-sm mb-4">
+                  <p className="text-gray-300 text-sm mb-4">
                     На основе ваших предыдущих ставок мы определили, что у вас <strong>умеренный</strong> профиль риска.
                   </p>
                   
-                  <div className="h-2 w-full bg-gray-200 rounded-full overflow-hidden mb-2">
+                  <div className="h-2 w-full bg-sport-blue-dark/70 rounded-full overflow-hidden mb-2">
                     <div className="h-full bg-sport-blue-medium w-1/2"></div>
                   </div>
-                  <div className="flex justify-between text-xs text-gray-500">
+                  <div className="flex justify-between text-xs text-gray-400">
                     <span>Консервативный</span>
                     <span>Умеренный</span>
                     <span>Агрессивный</span>
@@ -305,33 +383,45 @@ const Tools = () => {
                   <ul className="space-y-3">
                     <li className="flex items-start">
                       <div className="min-w-5 h-5 bg-sport-blue-light/20 rounded-full flex items-center justify-center text-sport-blue-medium text-sm mr-3 mt-0.5">1</div>
-                      <p className="text-gray-600 text-sm">Ограничьте размер отдельной ставки до 5% от банкролла</p>
+                      <p className="text-gray-300 text-sm">Ограничьте размер отдельной ставки до 5% от банкролла</p>
                     </li>
                     <li className="flex items-start">
                       <div className="min-w-5 h-5 bg-sport-blue-light/20 rounded-full flex items-center justify-center text-sport-blue-medium text-sm mr-3 mt-0.5">2</div>
-                      <p className="text-gray-600 text-sm">Избегайте ставок на коэффициенты ниже 1.5 и выше 2.5</p>
+                      <p className="text-gray-300 text-sm">Избегайте ставок на коэффициенты ниже 1.5 и выше 2.5</p>
                     </li>
                     <li className="flex items-start">
                       <div className="min-w-5 h-5 bg-sport-blue-light/20 rounded-full flex items-center justify-center text-sport-blue-medium text-sm mr-3 mt-0.5">3</div>
-                      <p className="text-gray-600 text-sm">Установите дневной лимит в размере 15% от банкролла</p>
+                      <p className="text-gray-300 text-sm">Установите дневной лимит в размере 15% от банкролла</p>
                     </li>
                     <li className="flex items-start">
                       <div className="min-w-5 h-5 bg-sport-blue-light/20 rounded-full flex items-center justify-center text-sport-blue-medium text-sm mr-3 mt-0.5">4</div>
-                      <p className="text-gray-600 text-sm">Делайте перерыв после 3 проигрышных ставок подряд</p>
+                      <p className="text-gray-300 text-sm">Делайте перерыв после 3 проигрышных ставок подряд</p>
                     </li>
                   </ul>
                 </div>
                 
-                <div className="bg-gray-50 p-4 rounded-lg">
+                <div className="bg-sport-blue-dark/50 p-4 rounded-lg">
                   <h4 className="font-semibold mb-2">Установить лимиты</h4>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                     <div>
-                      <label className="block text-xs text-gray-500 mb-1">Дневной лимит (₽)</label>
-                      <input type="number" className="w-full px-3 py-1.5 border border-gray-300 rounded-md text-sm" placeholder="1000" />
+                      <label className="block text-xs text-gray-400 mb-1">Дневной лимит (₽)</label>
+                      <input 
+                        type="number" 
+                        className="w-full px-3 py-1.5 border border-gray-600 rounded-md text-sm bg-sport-blue-dark/60 text-white" 
+                        placeholder="1000" 
+                        value={dailyLimit}
+                        onChange={(e) => setDailyLimit(Number(e.target.value))}
+                      />
                     </div>
                     <div>
-                      <label className="block text-xs text-gray-500 mb-1">Макс. размер ставки (%)</label>
-                      <input type="number" className="w-full px-3 py-1.5 border border-gray-300 rounded-md text-sm" placeholder="5" />
+                      <label className="block text-xs text-gray-400 mb-1">Макс. размер ставки (%)</label>
+                      <input 
+                        type="number" 
+                        className="w-full px-3 py-1.5 border border-gray-600 rounded-md text-sm bg-sport-blue-dark/60 text-white" 
+                        placeholder="5" 
+                        value={maxBetSize}
+                        onChange={(e) => setMaxBetSize(Number(e.target.value))}
+                      />
                     </div>
                   </div>
                 </div>

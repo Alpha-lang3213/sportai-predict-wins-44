@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
 import { Input } from "@/components/ui/input";
+import { Link } from "react-router-dom";
 
 // Mocked match data
 const matchesData = [
@@ -95,7 +96,11 @@ const formatTimeUntil = (dateString: string) => {
   return `${diffHours}ч ${diffMinutes}м`;
 };
 
-const UpcomingMatches = () => {
+interface UpcomingMatchesProps {
+  onShowAllMatches?: () => void;
+}
+
+const UpcomingMatches: React.FC<UpcomingMatchesProps> = ({ onShowAllMatches }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [currentTab, setCurrentTab] = useState("today");
   
@@ -125,6 +130,7 @@ const UpcomingMatches = () => {
               defaultValue="today" 
               className="w-full sm:w-auto"
               onValueChange={setCurrentTab}
+              value={currentTab}
             >
               <TabsList className="grid grid-cols-3 w-full sm:w-[400px] bg-sport-blue">
                 <TabsTrigger value="today" className="text-gray-300 data-[state=active]:bg-sport-blue-medium data-[state=active]:text-gray-200">Сегодня</TabsTrigger>
@@ -139,7 +145,7 @@ const UpcomingMatches = () => {
                 placeholder="Поиск команды..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-sport-blue border-sport-blue-medium/30 text-gray-300 placeholder:text-gray-500"
+                className="w-full bg-sport-blue border-sport-blue-medium/30 text-gray-300 placeholder:text-gray-500 pr-9"
               />
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">
                 <circle cx="11" cy="11" r="8"></circle>
@@ -193,7 +199,7 @@ const UpcomingMatches = () => {
                         <td className="text-gray-400">{match.awayWinPercentage}%</td>
                       </tr>
                     </HoverCardTrigger>
-                    <HoverCardContent className="w-80 p-0 bg-sport-blue border-sport-blue-medium/30 neo-blur">
+                    <HoverCardContent className="w-80 p-0 bg-sport-blue border-sport-blue-medium/30 neo-blur z-50">
                       <div className="p-4">
                         <div className="text-sm font-medium mb-2 text-gray-300">{match.homeTeam} - {match.awayTeam}</div>
                         <div className="text-xs text-gray-500 mb-4">{match.league} · {new Date(match.time).toLocaleString()}</div>
@@ -243,9 +249,11 @@ const UpcomingMatches = () => {
                       </div>
                       <div className="border-t border-sport-blue-medium/30 p-3 flex justify-between items-center bg-sport-blue/90">
                         <div className="text-xs text-gray-500">Полный анализ доступен в Pro-тарифе</div>
-                        <Button size="sm" className="bg-sport-blue-medium hover:bg-sport-blue-light">
-                          Подробнее
-                        </Button>
+                        <Link to="/pricing">
+                          <Button size="sm" className="bg-sport-blue-medium hover:bg-sport-blue-light">
+                            Подробнее
+                          </Button>
+                        </Link>
                       </div>
                     </HoverCardContent>
                   </HoverCard>
@@ -262,9 +270,15 @@ const UpcomingMatches = () => {
         </div>
         
         <div className="text-center">
-          <Button variant="outline" className="border-sport-blue-medium text-sport-blue-medium hover:bg-sport-blue-medium hover:text-gray-200">
-            Показать все матчи
-          </Button>
+          <Link to="/predictions">
+            <Button 
+              variant="outline" 
+              className="border-sport-blue-medium text-sport-blue-medium hover:bg-sport-blue-medium hover:text-gray-200"
+              onClick={onShowAllMatches}
+            >
+              Показать все матчи
+            </Button>
+          </Link>
         </div>
       </div>
     </section>

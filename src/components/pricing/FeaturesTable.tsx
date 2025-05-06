@@ -1,64 +1,7 @@
 
 import React from "react";
 import { Check, X } from "lucide-react";
-
-interface Feature {
-  name: string;
-  basic: boolean;
-  standard: boolean;
-  premium: boolean;
-}
-
-const features: Feature[] = [
-  {
-    name: "Список матчей без вероятностей",
-    basic: true,
-    standard: true,
-    premium: true
-  },
-  {
-    name: "Прогнозы с вероятностями",
-    basic: false,
-    standard: true,
-    premium: true
-  },
-  {
-    name: "Базовая аналитика",
-    basic: false,
-    standard: true,
-    premium: true
-  },
-  {
-    name: "Углубленная аналитика",
-    basic: false,
-    standard: false,
-    premium: true
-  },
-  {
-    name: "Персональные рекомендации",
-    basic: false,
-    standard: false,
-    premium: true
-  },
-  {
-    name: "Подписка на Telegram-канал",
-    basic: true,
-    standard: true,
-    premium: true
-  },
-  {
-    name: "Email-уведомления",
-    basic: false,
-    standard: true,
-    premium: true
-  },
-  {
-    name: "Персональный менеджер",
-    basic: false,
-    standard: false,
-    premium: true
-  }
-];
+import { pricingFeatures } from "@/constants/pricing";
 
 const FeaturesTable = () => {
   return (
@@ -73,9 +16,9 @@ const FeaturesTable = () => {
           </tr>
         </thead>
         <tbody>
-          {features.map((feature, index) => (
+          {pricingFeatures.map((feature, index) => (
             <tr key={index} className={index % 2 === 0 ? 'bg-sport-blue/20' : 'bg-sport-blue/10'}>
-              <td className="p-4 border border-gray-700">{feature.name}</td>
+              <td className="p-4 border border-gray-700">{feature.title}</td>
               <td className="p-4 text-center border border-gray-700">
                 {feature.basic ? (
                   <Check className="mx-auto text-sport-green" size={20} />
