@@ -6,21 +6,17 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import FeaturesTable from "@/components/pricing/FeaturesTable";
-
 const Pricing = () => {
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
-
   const handleSelectPlan = (plan: string) => {
     setSelectedPlan(plan);
     // Scroll to payment section or show modal
     window.scrollTo({
       top: document.body.scrollHeight,
-      behavior: 'smooth',
+      behavior: 'smooth'
     });
   };
-
-  return (
-    <div className="min-h-screen bg-sport-blue-dark text-gray-300">
+  return <div className="min-h-screen bg-sport-blue-dark text-gray-300">
       <Header />
       <main className="pt-24">
         {/* Hero Section */}
@@ -69,12 +65,7 @@ const Pricing = () => {
                   </div>
                 </div>
 
-                <Button 
-                  className={`w-full ${selectedPlan === 'basic' 
-                    ? 'bg-sport-blue-medium hover:bg-sport-blue-light' 
-                    : 'border border-gray-600 hover:border-sport-blue-medium bg-transparent hover:bg-sport-blue/10'}`}
-                  onClick={() => handleSelectPlan('basic')}
-                >
+                <Button className={`w-full ${selectedPlan === 'basic' ? 'bg-sport-blue-medium hover:bg-sport-blue-light' : 'border border-gray-600 hover:border-sport-blue-medium bg-transparent hover:bg-sport-blue/10'}`} onClick={() => handleSelectPlan('basic')}>
                   Выбрать
                 </Button>
               </div>
@@ -117,12 +108,7 @@ const Pricing = () => {
                   </div>
                 </div>
 
-                <Button 
-                  className={`w-full ${selectedPlan === 'standard' 
-                    ? 'bg-sport-blue-medium hover:bg-sport-blue-light' 
-                    : 'bg-sport-blue-medium/80 hover:bg-sport-blue-medium'}`}
-                  onClick={() => handleSelectPlan('standard')}
-                >
+                <Button className={`w-full ${selectedPlan === 'standard' ? 'bg-sport-blue-medium hover:bg-sport-blue-light' : 'bg-sport-blue-medium/80 hover:bg-sport-blue-medium'}`} onClick={() => handleSelectPlan('standard')}>
                   Выбрать
                 </Button>
               </div>
@@ -178,12 +164,7 @@ const Pricing = () => {
                   </div>
                 </div>
 
-                <Button 
-                  className={`w-full ${selectedPlan === 'premium' 
-                    ? 'bg-sport-accent hover:bg-sport-accent-hover' 
-                    : 'border border-sport-accent hover:bg-sport-accent/10 bg-transparent'}`}
-                  onClick={() => handleSelectPlan('premium')}
-                >
+                <Button className={`w-full ${selectedPlan === 'premium' ? 'bg-sport-accent hover:bg-sport-accent-hover' : 'border border-sport-accent hover:bg-sport-accent/10 bg-transparent'}`} onClick={() => handleSelectPlan('premium')}>
                   Выбрать
                 </Button>
               </div>
@@ -204,7 +185,7 @@ const Pricing = () => {
                   <div className="flex flex-col items-center">
                     <div className="mb-3 w-40 h-5 bg-[#1a1c24] rounded-lg"></div>
                     <div className="text-xl font-bold text-white mb-3">0 ₽</div>
-                    <div className="h-12 w-full bg-[#1a1c24] rounded-b-lg"></div>
+                    <div className="h-12 w-full bg-[#1a1] rounded-b-lg"></div>
                   </div>
                   <p className="mt-4 text-sm text-gray-400">Бесплатный план</p>
                 </div>
@@ -383,11 +364,9 @@ const Pricing = () => {
                     Стандартного тарифа достаточно для моих нужд — рекомендую!"
                   </p>
                   <div className="flex mt-4">
-                    {[1, 2, 3, 4, 5].map((rating) => (
-                      <svg key={rating} xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="#8B5CF6" stroke="#8B5CF6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    {[1, 2, 3, 4, 5].map(rating => <svg key={rating} xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="#8B5CF6" stroke="#8B5CF6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                      </svg>
-                    ))}
+                      </svg>)}
                   </div>
                 </div>
                 
@@ -404,11 +383,9 @@ const Pricing = () => {
                     стратегию, которая увеличила мой ROI вдвое. Премиум тариф окупил себя за первые две недели."
                   </p>
                   <div className="flex mt-4">
-                    {[1, 2, 3, 4, 5].map((rating) => (
-                      <svg key={rating} xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="#8B5CF6" stroke="#8B5CF6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    {[1, 2, 3, 4, 5].map(rating => <svg key={rating} xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="#8B5CF6" stroke="#8B5CF6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                      </svg>
-                    ))}
+                      </svg>)}
                   </div>
                 </div>
               </div>
@@ -450,16 +427,10 @@ const Pricing = () => {
               Выберите подходящий тариф и начните использовать силу искусственного интеллекта для прибыльных ставок
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button 
-                className="bg-sport-blue-medium hover:bg-sport-blue-light text-white text-lg px-8"
-                onClick={() => setSelectedPlan('standard')}
-              >
+              <Button className="bg-sport-blue-medium hover:bg-sport-blue-light text-white text-lg px-8" onClick={() => setSelectedPlan('standard')}>
                 Выбрать Стандартный тариф
               </Button>
-              <Button 
-                className="bg-transparent border border-sport-blue-medium text-sport-blue-medium hover:bg-sport-blue-medium/10"
-                onClick={() => setSelectedPlan('premium')}
-              >
+              <Button className="bg-transparent border border-sport-blue-medium text-sport-blue-medium hover:bg-sport-blue-medium/10" onClick={() => setSelectedPlan('premium')}>
                 Узнать о Премиум
               </Button>
             </div>
@@ -468,44 +439,24 @@ const Pricing = () => {
       </main>
 
       {/* Sticky CTA bar if a plan is selected */}
-      {selectedPlan && (
-        <div className="fixed bottom-0 left-0 right-0 bg-sport-blue-dark/90 backdrop-blur-lg py-4 border-t border-sport-blue-medium/30 z-50">
+      {selectedPlan && <div className="fixed bottom-0 left-0 right-0 bg-sport-blue-dark/90 backdrop-blur-lg py-4 border-t border-sport-blue-medium/30 z-50">
           <div className="container mx-auto flex flex-col sm:flex-row items-center justify-between px-4">
             <div className="flex items-center mb-4 sm:mb-0">
               <div className="mr-4">
                 <p className="text-gray-300">Выбранный тариф:</p>
-                <p className="font-bold text-white">{
-                  selectedPlan === 'basic' ? 'Базовый (Бесплатно)' : 
-                  selectedPlan === 'standard' ? 'Стандартный (1 300 ₽)' : 
-                  'Премиум (990 ₽ + 9 900 ₽/мес)'
-                }</p>
+                <p className="font-bold text-white">{selectedPlan === 'basic' ? 'Базовый (Бесплатно)' : selectedPlan === 'standard' ? 'Стандартный (1 300 ₽)' : 'Премиум (990 ₽ + 9 900 ₽/мес)'}</p>
               </div>
-              <Button 
-                variant="ghost" 
-                size="sm" 
-                className="text-gray-400 hover:text-gray-200"
-                onClick={() => setSelectedPlan(null)}
-              >
+              <Button variant="ghost" size="sm" className="text-gray-400 hover:text-gray-200" onClick={() => setSelectedPlan(null)}>
                 Изменить
               </Button>
             </div>
-            <Button 
-              className={
-                selectedPlan === 'basic' ? 'bg-sport-blue-medium hover:bg-sport-blue-light' : 
-                selectedPlan === 'standard' ? 'bg-sport-blue-medium hover:bg-sport-blue-light' : 
-                'bg-sport-accent hover:bg-sport-accent-hover'
-              }
-              size="lg"
-            >
+            <Button className={selectedPlan === 'basic' ? 'bg-sport-blue-medium hover:bg-sport-blue-light' : selectedPlan === 'standard' ? 'bg-sport-blue-medium hover:bg-sport-blue-light' : 'bg-sport-accent hover:bg-sport-accent-hover'} size="lg">
               {selectedPlan === 'basic' ? 'Активировать бесплатно' : 'Перейти к оплате'}
             </Button>
           </div>
-        </div>
-      )}
+        </div>}
 
       <Footer />
-    </div>
-  );
+    </div>;
 };
-
 export default Pricing;
