@@ -64,6 +64,16 @@ const Header = () => {
                   </Link>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
+                  <Link to="/about">
+                    <NavigationMenuLink className={cn(
+                      navigationMenuTriggerStyle(),
+                      isActive("/about") && "bg-sport-blue-medium text-white"
+                    )}>
+                      О нас
+                    </NavigationMenuLink>
+                  </Link>
+                </NavigationMenuItem>
+                <NavigationMenuItem>
                   <NavigationMenuTrigger>О продукте</NavigationMenuTrigger>
                   <NavigationMenuContent>
                     <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
@@ -159,6 +169,9 @@ const Header = () => {
             </Link>
             <Link to="/pricing" className={cn("block py-2 text-lg", isActive("/pricing") && "text-sport-blue-medium font-medium")} onClick={toggleMobileMenu}>
               Тарифы
+            </Link>
+            <Link to="/about" className={cn("block py-2 text-lg", isActive("/about") && "text-sport-blue-medium font-medium")} onClick={toggleMobileMenu}>
+              О нас
             </Link>
             <div className="block py-2 text-lg">О продукте</div>
             <div className="pl-4 space-y-3">

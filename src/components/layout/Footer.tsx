@@ -42,20 +42,20 @@ const Footer = () => {
           <div className="col-span-1">
             <h3 className="font-semibold text-lg mb-4">Сервис</h3>
             <ul className="space-y-2">
-              <li><Link to="#" className="text-gray-300 hover:text-white transition-colors">О нас</Link></li>
-              <li><Link to="#" className="text-gray-300 hover:text-white transition-colors">Наши инструменты</Link></li>
-              <li><Link to="#" className="text-gray-300 hover:text-white transition-colors">Обучение</Link></li>
-              <li><Link to="#" className="text-gray-300 hover:text-white transition-colors">Блог</Link></li>
+              <li><Link to="/about" className="text-gray-300 hover:text-white transition-colors">О нас</Link></li>
+              <li><Link to="/how-it-works" className="text-gray-300 hover:text-white transition-colors">Наши инструменты</Link></li>
+              <li><Link to="/blog/tutorials" className="text-gray-300 hover:text-white transition-colors">Обучение</Link></li>
+              <li><Link to="/blog" className="text-gray-300 hover:text-white transition-colors">Блог</Link></li>
             </ul>
           </div>
 
           <div className="col-span-1">
             <h3 className="font-semibold text-lg mb-4">Поддержка</h3>
             <ul className="space-y-2">
-              <li><Link to="#" className="text-gray-300 hover:text-white transition-colors">Часто задаваемые вопросы</Link></li>
-              <li><Link to="#" className="text-gray-300 hover:text-white transition-colors">Связаться с нами</Link></li>
-              <li><Link to="#" className="text-gray-300 hover:text-white transition-colors">Политика конфиденциальности</Link></li>
-              <li><Link to="#" className="text-gray-300 hover:text-white transition-colors">Условия использования</Link></li>
+              <li><Link to="/faq" className="text-gray-300 hover:text-white transition-colors">Часто задаваемые вопросы</Link></li>
+              <li><Link to="/contact" className="text-gray-300 hover:text-white transition-colors">Связаться с нами</Link></li>
+              <li><Link to="/privacy-policy" className="text-gray-300 hover:text-white transition-colors">Политика конфиденциальности</Link></li>
+              <li><Link to="/terms" className="text-gray-300 hover:text-white transition-colors">Условия использования</Link></li>
             </ul>
           </div>
 
@@ -82,8 +82,8 @@ const Footer = () => {
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p>© {currentYear} SportAI. Все права защищены.</p>
             <div className="flex space-x-6 mt-4 md:mt-0">
-              <Link to="#" className="hover:text-white transition-colors">Политика конфиденциальности</Link>
-              <Link to="#" className="hover:text-white transition-colors">Условия использования</Link>
+              <Link to="/privacy-policy" className="hover:text-white transition-colors">Политика конфиденциальности</Link>
+              <Link to="/terms" className="hover:text-white transition-colors">Условия использования</Link>
             </div>
           </div>
         </div>
