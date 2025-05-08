@@ -3,6 +3,7 @@ import React from "react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { Star } from "lucide-react";
+import { Card } from "@/components/ui/card";
 
 const testimonials = [
   {
@@ -68,7 +69,7 @@ const Testimonials = () => {
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {testimonials.map((testimonial) => (
-            <div key={testimonial.id} className="bg-sport-blue-medium/10 rounded-lg p-6 border border-sport-blue-medium/30">
+            <Card key={testimonial.id} className="bg-sport-blue/80 border-sport-blue-medium/30 text-white neo-blur p-6">
               <div className="flex items-center mb-4">
                 <div className="flex space-x-1 mr-4">
                   {[...Array(5)].map((_, i) => (
@@ -86,11 +87,11 @@ const Testimonials = () => {
                 <span>{testimonial.name}</span>
                 <span>{testimonial.date}</span>
               </div>
-            </div>
+            </Card>
           ))}
         </div>
         
-        <div className="mt-16 bg-sport-blue-medium/20 rounded-lg p-8 max-w-3xl mx-auto">
+        <div className="mt-16 bg-sport-blue/70 neo-blur rounded-lg p-8 max-w-3xl mx-auto border border-sport-blue-medium/30">
           <h2 className="text-2xl font-semibold mb-4 text-white text-center">Оставьте свой отзыв</h2>
           <form className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -99,14 +100,14 @@ const Testimonials = () => {
                 <input 
                   type="text" 
                   id="name" 
-                  className="w-full p-2 rounded bg-sport-blue-dark/80 border border-sport-blue-medium/50 focus:outline-none focus:border-sport-accent"
+                  className="w-full p-2 rounded bg-sport-blue/80 border border-sport-blue-medium/50 focus:outline-none focus:border-sport-accent text-gray-300"
                 />
               </div>
               <div>
                 <label htmlFor="rating" className="block mb-1">Оценка</label>
                 <select 
                   id="rating" 
-                  className="w-full p-2 rounded bg-sport-blue-dark/80 border border-sport-blue-medium/50 focus:outline-none focus:border-sport-accent"
+                  className="w-full p-2 rounded bg-sport-blue/80 border border-sport-blue-medium/50 focus:outline-none focus:border-sport-accent text-gray-300"
                 >
                   <option value="5">5 звезд</option>
                   <option value="4">4 звезды</option>
@@ -121,7 +122,7 @@ const Testimonials = () => {
               <textarea 
                 id="review" 
                 rows={4} 
-                className="w-full p-2 rounded bg-sport-blue-dark/80 border border-sport-blue-medium/50 focus:outline-none focus:border-sport-accent"
+                className="w-full p-2 rounded bg-sport-blue/80 border border-sport-blue-medium/50 focus:outline-none focus:border-sport-accent text-gray-300"
               ></textarea>
             </div>
             <div className="text-center">

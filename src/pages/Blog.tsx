@@ -88,8 +88,8 @@ const Blog = () => {
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {blogPosts.map((post) => (
-            <Link to={`/blog/${post.id}`} key={post.id} className="group">
-              <div className="bg-sport-blue-medium/10 rounded-lg overflow-hidden border border-sport-blue-medium/30 transition hover:border-sport-accent">
+            <Link to={`/blog/${post.id}`} key={post.id} className="group h-full">
+              <div className="bg-sport-blue-medium/10 rounded-lg overflow-hidden border border-sport-blue-medium/30 transition hover:border-sport-accent h-full flex flex-col">
                 <div className="h-48 overflow-hidden">
                   <img 
                     src={post.image} 
@@ -97,14 +97,14 @@ const Blog = () => {
                     className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
                   />
                 </div>
-                <div className="p-6">
+                <div className="p-6 flex-grow flex flex-col">
                   <div className="flex justify-between text-sm text-gray-400 mb-2">
                     <span>{post.category}</span>
                     <span>{post.date}</span>
                   </div>
                   <h3 className="text-xl font-semibold mb-2 text-white group-hover:text-sport-accent transition">{post.title}</h3>
-                  <p className="mb-4 line-clamp-3">{post.excerpt}</p>
-                  <div className="flex items-center text-sm">
+                  <p className="mb-4 line-clamp-3 flex-grow">{post.excerpt}</p>
+                  <div className="flex items-center text-sm mt-auto">
                     <span className="text-sport-accent">Автор: {post.author}</span>
                   </div>
                 </div>
