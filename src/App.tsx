@@ -12,6 +12,7 @@ import Pricing from "./pages/Pricing";
 import Predictions from "./pages/Predictions";
 import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
+import ForgotPassword from "./pages/Auth/ForgotPassword";
 import Profile from "./pages/Profile";
 import Payment from "./pages/Payment";
 import AboutUs from "./pages/AboutUs";
@@ -51,6 +52,7 @@ const App = () => (
             <Route path="/predictions" element={<Predictions />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/payment" element={<Payment />} />
             <Route path="/about" element={<AboutUs />} />

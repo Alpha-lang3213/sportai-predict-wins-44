@@ -1,9 +1,10 @@
 
-import React from "react";
+import React, { useState } from "react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { Star } from "lucide-react";
 import { Card } from "@/components/ui/card";
+import { useToast } from "@/components/ui/use-toast";
 
 const testimonials = [
   {
@@ -57,8 +58,24 @@ const testimonials = [
 ];
 
 const Testimonials = () => {
+  const [rating, setRating] = useState<number>(5);
+  const [name, setName] = useState<string>("");
+  const [review, setReview] = useState<string>("");
+  const { toast } = useToast();
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    toast({
+      title: "Отзыв отправлен",
+      description: "Спасибо за ваш отзыв! Он будет опубликован после модерации.",
+    });
+    setName("");
+    setReview("");
+    setRating(5);
+  };
+
   return (
-    <div className="min-h-screen bg-sport-blue-dark text-gray-300">
+    <div className="min-h-screen bg-gradient-to-b from-sport-blue-dark to-sport-blue text-gray-300">
       <Header />
       <main className="container mx-auto px-4 py-16">
         <h1 className="text-4xl font-bold mb-4 text-white text-center">Отзывы наших пользователей</h1>
@@ -93,13 +110,15 @@ const Testimonials = () => {
         
         <div className="mt-16 bg-sport-blue/70 neo-blur rounded-lg p-8 max-w-3xl mx-auto border border-sport-blue-medium/30">
           <h2 className="text-2xl font-semibold mb-4 text-white text-center">Оставьте свой отзыв</h2>
-          <form className="space-y-4">
+          <form className="space-y-4" onSubmit={handleSubmit}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label htmlFor="name" className="block mb-1">Ваше имя</label>
                 <input 
                   type="text" 
                   id="name" 
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
                   className="w-full p-2 rounded bg-sport-blue/80 border border-sport-blue-medium/50 focus:outline-none focus:border-sport-accent text-gray-300"
                 />
               </div>
@@ -107,6 +126,8 @@ const Testimonials = () => {
                 <label htmlFor="rating" className="block mb-1">Оценка</label>
                 <select 
                   id="rating" 
+                  value={rating}
+                  onChange={(e) => setRating(parseInt(e.target.value))}
                   className="w-full p-2 rounded bg-sport-blue/80 border border-sport-blue-medium/50 focus:outline-none focus:border-sport-accent text-gray-300"
                 >
                   <option value="5">5 звезд</option>
@@ -121,7 +142,9 @@ const Testimonials = () => {
               <label htmlFor="review" className="block mb-1">Ваш отзыв</label>
               <textarea 
                 id="review" 
-                rows={4} 
+                rows={4}
+                value={review}
+                onChange={(e) => setReview(e.target.value)}
                 className="w-full p-2 rounded bg-sport-blue/80 border border-sport-blue-medium/50 focus:outline-none focus:border-sport-accent text-gray-300"
               ></textarea>
             </div>

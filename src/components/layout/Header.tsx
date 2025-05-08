@@ -74,7 +74,7 @@ const Header = () => {
                   </Link>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
-                  <NavigationMenuTrigger>О продукте</NavigationMenuTrigger>
+                  <NavigationMenuTrigger className={isActive("/how-it-works") || isActive("/testimonials") || isActive("/blog") ? "bg-sport-blue-medium text-white" : ""}>О продукте</NavigationMenuTrigger>
                   <NavigationMenuContent>
                     <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
                       <li className="row-span-3">

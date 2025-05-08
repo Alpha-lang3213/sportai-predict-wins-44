@@ -26,7 +26,7 @@ const Index = () => {
   };
   
   return (
-    <div className="min-h-screen bg-sport-blue-dark text-gray-300">
+    <div className="min-h-screen bg-gradient-to-b from-sport-blue-dark to-sport-blue text-gray-300">
       <Header />
       <main>
         <Hero />
