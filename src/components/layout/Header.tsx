@@ -30,6 +30,7 @@ const Header = () => {
             <span className="text-xl font-bold text-gradient">Sport<span className="text-accent">AI</span></span>
           </Link>
 
+          {/* Full navigation menu for desktop */}
           {!isMobile && (
             <NavigationMenu className="hidden md:flex">
               <NavigationMenuList className="gap-2">
@@ -124,6 +125,7 @@ const Header = () => {
           )}
         </div>
         
+        {/* Desktop auth buttons */}
         <div className="hidden md:flex items-center gap-4">
           {user ? (
             <div className="flex items-center gap-4">
@@ -149,15 +151,15 @@ const Header = () => {
           )}
         </div>
         
-        {/* Mobile menu button - making sure it's always visible on mobile */}
-        <div className="md:hidden">
+        {/* Mobile menu button - always visible on mobile */}
+        <div className="block md:hidden">
           <Button variant="ghost" size="icon" onClick={toggleMobileMenu} aria-label="Toggle menu">
             {mobileMenuOpen ? <X /> : <Menu />}
           </Button>
         </div>
       </div>
       
-      {/* Mobile menu - ensuring it appears correctly */}
+      {/* Mobile menu - with improved visibility and styling */}
       {isMobile && mobileMenuOpen && (
         <div className="fixed inset-0 top-16 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 overflow-y-auto">
           <nav className="container p-6 space-y-6">
@@ -198,7 +200,8 @@ const Header = () => {
               {user ? (
                 <>
                   <Link to="/profile" onClick={toggleMobileMenu}>
-                    <Button variant="outline" className="w-full">
+                    <Button variant="outline" className="w-full flex items-center justify-center gap-2">
+                      <User size={18} />
                       Личный кабинет
                     </Button>
                   </Link>
