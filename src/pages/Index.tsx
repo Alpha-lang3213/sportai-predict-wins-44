@@ -28,7 +28,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-sport-blue-dark to-sport-blue text-gray-300">
       <Header />
-      <main>
+      <main className="w-full overflow-x-hidden">
         <Hero />
         <UpcomingMatches onShowAllMatches={showAllMatchesCallback} />
         <Tools />

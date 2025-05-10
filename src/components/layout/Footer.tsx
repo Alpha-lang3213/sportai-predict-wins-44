@@ -8,7 +8,7 @@ const Footer = () => {
   return (
     <footer className="bg-sport-blue-dark text-white pt-16 pb-8">
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
           <div className="col-span-1 md:col-span-1">
             <div className="font-bold text-xl flex items-center gap-2 mb-4">
               <div className="w-8 h-8 bg-sport-blue-medium rounded-md flex items-center justify-center">
@@ -35,7 +35,7 @@ const Footer = () => {
               <a href="#" className="text-gray-300 hover:text-white transition-colors">
                 {/* TikTok icon */}
                 <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M16.6 5.82s.51.5.51.5v3.93s-.501-.08-1.122-.08c-1.695 0-2.695.78-2.695 2.23v2.38h3.82v3.73h-3.82V24H8.61V18.53H5V14.8h3.61v-2.39c0-3.61 2.55-5.84 5.72-5.84 1.45 0 2.27.16 2.27.16v3.1z"/>
+                  <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-5.2 1.74 2.89 2.89 0 015.16-1.74V12.1a8.07 8.07 0 003.77.9h.42V9.59a6.07 6.07 0 01-3.77-.9 4.83 4.83 0 003.77-2z"/>
                 </svg>
               </a>
               <a href="#" className="text-gray-300 hover:text-white transition-colors">
@@ -60,29 +60,10 @@ const Footer = () => {
           <div className="col-span-1">
             <h3 className="font-semibold text-lg mb-4">Поддержка</h3>
             <ul className="space-y-2">
-              <li><Link to="/faq" className="text-gray-300 hover:text-white transition-colors">Часто задаваемые вопросы</Link></li>
               <li><Link to="/contact" className="text-gray-300 hover:text-white transition-colors">Связаться с нами</Link></li>
               <li><Link to="/privacy-policy" className="text-gray-300 hover:text-white transition-colors">Политика конфиденциальности</Link></li>
               <li><Link to="/terms" className="text-gray-300 hover:text-white transition-colors">Условия использования</Link></li>
             </ul>
-          </div>
-
-          <div className="col-span-1">
-            <h3 className="font-semibold text-lg mb-4">Подписаться на новости</h3>
-            <p className="text-gray-300 mb-4">Получайте эксклюзивные прогнозы и советы по ставкам</p>
-            <div className="flex">
-              <input
-                type="email"
-                placeholder="Ваш email"
-                className="px-4 py-2 w-full rounded-l-md focus:outline-none text-gray-900"
-              />
-              <button className="bg-sport-accent hover:bg-sport-accent-hover px-4 py-2 rounded-r-md">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="m5 12 14 0"></path>
-                  <path d="m12 5 7 7-7 7"></path>
-                </svg>
-              </button>
-            </div>
           </div>
         </div>
 

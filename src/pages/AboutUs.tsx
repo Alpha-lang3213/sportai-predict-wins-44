@@ -19,10 +19,10 @@ const AboutUs = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-sport-blue-dark to-sport-blue text-gray-300">
       <Header />
-      <main className="flex flex-col gap-20 pb-20">
+      <main className="flex flex-col gap-20 pb-20 w-full overflow-x-hidden">
         <AboutUsHero onScrollDown={scrollToTech} />
         <MissionValues />
-        <div ref={techSectionRef}>
+        <div ref={techSectionRef} className="w-full">
           <Technologies />
         </div>
       </main>
