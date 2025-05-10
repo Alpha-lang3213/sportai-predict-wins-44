@@ -149,17 +149,17 @@ const Header = () => {
           )}
         </div>
         
-        {/* Mobile menu button */}
+        {/* Mobile menu button - making sure it's always visible on mobile */}
         <div className="md:hidden">
-          <Button variant="ghost" size="icon" onClick={toggleMobileMenu}>
+          <Button variant="ghost" size="icon" onClick={toggleMobileMenu} aria-label="Toggle menu">
             {mobileMenuOpen ? <X /> : <Menu />}
           </Button>
         </div>
       </div>
       
-      {/* Mobile menu */}
+      {/* Mobile menu - ensuring it appears correctly */}
       {isMobile && mobileMenuOpen && (
-        <div className="fixed inset-0 top-16 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <div className="fixed inset-0 top-16 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 overflow-y-auto">
           <nav className="container p-6 space-y-6">
             <Link to="/" className={cn("block py-2 text-lg", isActive("/") && "text-sport-blue-medium font-medium")} onClick={toggleMobileMenu}>
               Главная
@@ -217,7 +217,7 @@ const Header = () => {
                     </Button>
                   </Link>
                   <Link to="/register" onClick={toggleMobileMenu}>
-                    <Button className="w-full" onClick={toggleMobileMenu}>
+                    <Button className="w-full">
                       Регистрация
                     </Button>
                   </Link>
