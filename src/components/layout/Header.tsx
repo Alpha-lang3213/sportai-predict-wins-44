@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger, navigationMenuTriggerStyle } from "@/components/ui/navigation-menu";
@@ -13,6 +13,11 @@ const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
   const { user, logout } = useAuth();
+  
+  // Force close mobile menu on route change
+  useEffect(() => {
+    setMobileMenuOpen(false);
+  }, [location.pathname]);
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
@@ -32,7 +37,7 @@ const Header = () => {
 
           {/* Full navigation menu for desktop */}
           {!isMobile && (
-            <NavigationMenu className="hidden md:flex">
+            <NavigationMenu className="hidden lg:flex">
               <NavigationMenuList className="gap-2">
                 <NavigationMenuItem>
                   <Link to="/">
@@ -126,7 +131,7 @@ const Header = () => {
         </div>
         
         {/* Desktop auth buttons */}
-        <div className="hidden md:flex items-center gap-4">
+        <div className="hidden lg:flex items-center gap-4">
           {user ? (
             <div className="flex items-center gap-4">
               <Link to="/profile">
@@ -152,8 +157,8 @@ const Header = () => {
         </div>
         
         {/* Mobile menu button - always visible on mobile */}
-        <div className="block md:hidden">
-          <Button variant="ghost" size="icon" onClick={toggleMobileMenu} aria-label="Toggle menu">
+        <div className="block lg:hidden">
+          <Button variant="ghost" size="icon" onClick={toggleMobileMenu} aria-label="Toggle menu" className="focus:outline-none">
             {mobileMenuOpen ? <X /> : <Menu />}
           </Button>
         </div>
@@ -175,7 +180,8 @@ const Header = () => {
             <Link to="/about" className={cn("block py-2 text-lg", isActive("/about") && "text-sport-blue-medium font-medium")} onClick={toggleMobileMenu}>
               О нас
             </Link>
-            <div className="block py-2 text-lg">О продукте</div>
+            
+            <div className="block py-2 text-lg font-medium">О продукте</div>
             <div className="pl-4 space-y-3">
               <Link to="/how-it-works" className="block py-1" onClick={toggleMobileMenu}>
                 Как это работает
@@ -187,7 +193,8 @@ const Header = () => {
                 Блог
               </Link>
             </div>
-            <div className="block py-2 text-lg">Поддержка</div>
+            
+            <div className="block py-2 text-lg font-medium">Поддержка</div>
             <div className="pl-4 space-y-3">
               <Link to="/faq" className="block py-1" onClick={toggleMobileMenu}>
                 FAQ
@@ -196,6 +203,7 @@ const Header = () => {
                 Связаться с нами
               </Link>
             </div>
+            
             <div className="pt-4 flex flex-col gap-4">
               {user ? (
                 <>

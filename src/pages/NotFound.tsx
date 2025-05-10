@@ -9,14 +9,14 @@ const NotFound = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen flex flex-col bg-sport-blue-dark text-gray-300">
+    <div className="min-h-screen flex flex-col bg-sport-blue-dark text-gray-300 overflow-hidden">
       <Header />
       <main className="flex-grow flex items-center justify-center p-4 sm:p-6">
         <div className="max-w-xs sm:max-w-sm md:max-w-md w-full text-center space-y-4 sm:space-y-6">
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-sport-accent">404</h1>
           <div className="space-y-2">
-            <h2 className="text-2xl sm:text-3xl font-bold text-gradient">Страница не найдена</h2>
-            <p className="text-sm sm:text-base text-gray-400">
+            <h2 className="text-2xl sm:text-3xl font-bold text-gradient break-words">Страница не найдена</h2>
+            <p className="text-sm sm:text-base text-gray-400 break-words">
               Запрашиваемая страница не существует или была перемещена
             </p>
           </div>
